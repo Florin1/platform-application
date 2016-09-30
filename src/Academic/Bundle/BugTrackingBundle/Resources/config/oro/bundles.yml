@@ -1,2 +1,2 @@
 bundles:
-    - Academic\Bundle\BugTrackingBundle\AcademicBugTrackingBundle
+    - { name: Academic\Bundle\BugTrackingBundle\AcademicBugTrackingBundle, priority: 100}

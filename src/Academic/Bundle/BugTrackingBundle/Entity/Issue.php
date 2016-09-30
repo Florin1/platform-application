@@ -23,6 +23,10 @@ use Oro\Bundle\UserBundle\Entity\User;
  */
 class Issue extends ExtendIssue
 {
+    const RESOLUTION_ENUM_CODE = 'oac_issue_resolution';
+    const TYPE_ENUM_CODE = 'oac_issue_type';
+    const PRIORITY_ENUM_CODE = 'oac_issue_priority';
+
     /**
      * @var integer
      *
@@ -85,7 +89,7 @@ class Issue extends ExtendIssue
 
     /**
      * @ORM\ManyToMany(targetEntity="Oro\Bundle\UserBundle\Entity\User")
-     * @ORM\JoinTable(name="issues_collaborators",
+     * @ORM\JoinTable(name="oro_academic_issue_user",
      *   joinColumns={@ORM\JoinColumn(name="issue_id", referencedColumnName="id")},
      *   inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
      *   )
