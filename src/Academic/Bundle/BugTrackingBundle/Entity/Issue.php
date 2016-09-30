@@ -93,12 +93,24 @@ class Issue extends ExtendIssue
     protected $collaborators;
 
     /**
+     * @ORM\OneToMany(targetEntity="Academic\Bundle\BugTrackingBundle\Entity\Issue", mappedBy="parent")
+     */
+    protected $children;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Academic\Bundle\BugTrackingBundle\Entity\Issue", inversedBy="children")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
+     */
+    protected $parent;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         parent::__construct();
         $this->collaborators = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -302,5 +314,61 @@ class Issue extends ExtendIssue
     public function getCollaborators()
     {
         return $this->collaborators;
+    }
+
+    /**
+     * Add child
+     *
+     * @param \Academic\Bundle\BugTrackingBundle\Entity\Issue $child
+     * @return Issue
+     */
+    public function addChild(Issue $child)
+    {
+        $this->children[] = $child;
+
+        return $this;
+    }
+
+    /**
+     * Remove child
+     *
+     * @param \Academic\Bundle\BugTrackingBundle\Entity\Issue $child
+     */
+    public function removeChild(Issue $child)
+    {
+        $this->children->removeElement($child);
+    }
+
+    /**
+     * Get children
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param \Academic\Bundle\BugTrackingBundle\Entity\Issue $parent
+     * @return Issue
+     */
+    public function setParent(Issue $parent = null)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \Academic\Bundle\BugTrackingBundle\Entity\Issue
+     */
+    public function getParent()
+    {
+        return $this->parent;
     }
 }
