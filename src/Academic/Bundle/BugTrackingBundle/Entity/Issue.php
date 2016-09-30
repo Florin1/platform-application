@@ -27,6 +27,21 @@ class Issue extends ExtendIssue
     const TYPE_ENUM_CODE = 'oac_issue_type';
     const PRIORITY_ENUM_CODE = 'oac_issue_priority';
 
+    const TYPE_TASK = 'task';
+    const TYPE_SUBTASK = 'subtask';
+    const TYPE_BUG = 'bug';
+
+    const PRIORITY_BLOCKER = 'blocker';
+    const PRIORITY_CRITICAL = 'critical';
+    const PRIORITY_MAJOR = 'major';
+    const PRIORITY_TRIVIAL = 'trivial';
+
+    const RESOLUTION_FIXED = 'fixed';
+    const RESOLUTION_DUPLICATE = 'duplicate';
+    const RESOLUTION_INCOMPLETE = 'incomplete';
+    const RESOLUTION_CANNOT_REPRODUCE = 'cannot_reproduce';
+    const RESOLUTION_DONE = 'done';
+
     /**
      * @var integer
      *
