@@ -1,1 +1,28 @@
+parameters:
+    academic.bug_tracking.issue.class:                 Academic\Bundle\BugTrackingBundle\Entity\Issue
+    academic.bug_tracking.form.type.issue.class:       Academic\Bundle\BugTrackingBundle\Form\Type\IssueType
+    academic.bug_tracking.form.handler.issue.class:    Academic\Bundle\BugTrackingBundle\Form\Handler\IssueHandler
+    academic.bug_tracking.form.listener.issue.class:   Academic\Bundle\BugTrackingBundle\Form\EventListener\IssueSubscriber
+
 services:
+    academic.bug_tracking.form.listener.issue:
+        class: '%academic.bug_tracking.form.listener.issue.class%'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@form.factory'
+
+    academic.bug_tracking.form.type.issue:
+        class: '%academic.bug_tracking.form.type.issue.class%'
+        arguments:
+            - '%academic.bug_tracking.issue.class%'
+            - '@academic.bug_tracking.form.listener.issue'
+        tags:
+            - { name: form.type, alias: academic_bug_tracking_issue }
+
+    academic.bug_tracking.form.handler.issue:
+        class: '%academic.bug_tracking.form.handler.issue.class%'
+        scope: request
+        arguments:
+            - '@academic.bug_tracking.form.type.issue'
+            - '@request'
+            - '@doctrine.orm.entity_manager'

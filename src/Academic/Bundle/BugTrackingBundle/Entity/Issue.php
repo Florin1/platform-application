@@ -13,6 +13,7 @@ use Oro\Bundle\UserBundle\Entity\User;
  *
  * @ORM\Table(name="oro_academic_issue")
  * @ORM\Entity(repositoryClass="Academic\Bundle\BugTrackingBundle\Entity\Repository\IssueRepository")
+ * @ORM\HasLifecycleCallbacks()
  * @Config(
  *   defaultValues={
  *       "tag"={
@@ -389,5 +390,26 @@ class Issue extends ExtendIssue
     public function getParent()
     {
         return $this->parent;
+    }
+
+    /**
+     * Set prePersistValues
+     *
+     * @ORM\PrePersist
+     */
+    public function setPrePersistValues()
+    {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+    }
+
+    /**
+     * Set preUpdateValues
+     *
+     * @ORM\PreUpdate
+     */
+    public function setPreUpdateValues()
+    {
+        $this->updatedAt = new \DateTime();
     }
 }
