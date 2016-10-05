@@ -1,0 +1,63 @@
+search:
+    Academic\Bundle\BugTrackingBundle\Entity\Issue:
+        alias:                          bug_tracking_issue
+        label:                          academic.bugtracking.issue.entity_label
+        title_fields:                   [code]
+        route:
+            name:                       academic_bug_tracking_view
+            parameters:
+                id:                     id
+        search_template:                AcademicBugTrackingBundle:Issue:searchResult.html.twig
+        fields:
+            -
+                name:                   code
+                target_type:            text
+                target_fields:          [code]
+            -
+                name:                   summary
+                target_type:            text
+                target_fields:          [summary]
+            -
+                name:                   summary
+                target_type:            text
+                target_fields:          [summary]
+            -
+                name: type
+                relation_type: many-to-one
+                relation_fields:
+                    -
+                        name: name
+                        target_type: text
+                        target_fields: [type]
+            -
+                name: priority
+                relation_type: many-to-one
+                relation_fields:
+                    -
+                        name: name
+                        target_type: text
+                        target_fields: [priority]
+            -
+                name: resolution
+                relation_type: many-to-one
+                relation_fields:
+                    -
+                        name: name
+                        target_type: text
+                        target_fields: [resolution]
+            -
+                name: reporter
+                relation_type: many-to-one
+                relation_fields:
+                    -
+                        name: username
+                        target_type: text
+                        target_fields: [username]
+            -
+                name: assignee
+                relation_type: many-to-one
+                relation_fields:
+                    -
+                        name: username
+                        target_type: text
+                        target_fields: [username]

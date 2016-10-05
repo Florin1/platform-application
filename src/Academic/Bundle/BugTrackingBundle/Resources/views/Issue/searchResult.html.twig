@@ -1,0 +1,16 @@
+{% extends 'OroSearchBundle:Search:searchResultItem.html.twig' %}
+
+{% set title = entity.code ~ '-'~ entity.summary %}
+
+{% set entityType = 'academic.bugtracking.issue.entity_label'|trans %}
+
+{% set recordUrl = indexer_item.recordUrl %}
+
+{% set entityInfo = [
+{'title': 'academic.bugtracking.issue.created_at.label'|trans, 'value': entity.createdAt ? entity.createdAt|oro_format_datetime : 'N/A'|trans},
+{'title': 'academic.bugtracking.issue.updated_at.label'|trans, 'value': entity.updatedAt ? entity.updatedAt|oro_format_datetime : 'N/A'|trans},
+{'title': 'academic.bugtracking.issue.type.label'|trans, 'value': entity.type ? entity.type : 'N/A'|trans},
+{'title': 'academic.bugtracking.issue.resolution.label'|trans, 'value': entity.resolution ? entity.resolution : 'N/A'|trans},
+{'title': 'academic.bugtracking.issue.reporter.label'|trans, 'value': entity.reporter ? entity.reporter : 'N/A'|trans},
+{'title': 'academic.bugtracking.issue.assignee.label'|trans, 'value': entity.assignee ? entity.assignee : 'N/A'|trans},
+] %}
