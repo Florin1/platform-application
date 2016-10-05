@@ -1,0 +1,66 @@
+{% extends 'OroUIBundle:actions:update.html.twig' %}
+{% form_theme form with 'OroFormBundle:Form:fields.html.twig' %}
+{% import 'OroDataGridBundle::macros.html.twig' as dataGrid %}
+
+{% oro_title_set({params : {"%code%": entity.code|default('N/A'|trans) } }) %}
+
+{% set formAction = entity.id ? path('academic_bug_tracking_update', { 'id': entity.id }) : path('academic_bug_tracking_create') %}
+
+{% block navButtons %}
+    {{ parent() }}
+
+    {{ UI.cancelButton(path('academic_bug_tracking_index')) }}
+
+    {% set html = UI.saveAndStayButton() %}
+
+    {% if entity.id %}
+        {% set html = html ~ UI.saveAndCloseButton({
+            'route': 'academic_bug_tracking_view',
+            'params': {'id': entity.id}
+        }) %}
+    {% endif %}
+    {{ UI.dropdownSaveButton({'html': html}) }}
+{% endblock navButtons %}
+
+{% block pageHeader %}
+    {% if entity.id %}
+        {% set breadcrumbs = {
+        'entity':      entity,
+        'indexPath':   path('academic_bug_tracking_index'),
+        'indexLabel': 'academic.bugtracking.issue.entity_plural_label'|trans,
+        'entityTitle': entity.code
+        } %}
+        {{ parent() }}
+    {% else %}
+        {% set title = 'oro.ui.create_entity'|trans({'%entityName%': 'academic.bugtracking.issue.entity_label'|trans}) %}
+        {% include 'OroUIBundle::page_title_block.html.twig' with { title: title } %}
+    {% endif %}
+{% endblock pageHeader %}
+
+{% block content_data %}
+    {% set id = 'issue-edit' %}
+    {% set dataBlocks = [{
+    'title': 'academic.bugtracking.block.general'|trans,
+    'class': 'active',
+    'subblocks': [{
+    'title': '',
+    'data': [
+    form_row(form.code),
+    form_row(form.summary),
+    form_row(form.description),
+    form_row(form.type),
+    form_row(form.priority),
+    form_row(form.resolution),
+    form_row(form.assignee),
+    form_row(form.reporter),
+    ]
+    }]
+    }] %}
+
+    {% set data = {
+    'formErrors': form_errors(form),
+    'dataBlocks': dataBlocks
+    } %}
+
+    {{ parent() }}
+{% endblock content_data %}

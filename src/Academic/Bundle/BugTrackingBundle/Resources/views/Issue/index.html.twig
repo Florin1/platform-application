@@ -1,0 +1,13 @@
+{% extends 'OroUIBundle:actions:index.html.twig' %}
+{% import 'OroUIBundle::macros.html.twig' as UI %}
+{% set gridName = 'bug-tracking-issuegrid' %}
+{% set pageTitle = 'academic.bugtracking.issue.entity_plural_label'|trans %}
+
+{% block navButtons %}
+        <div class="btn-group pull-right">
+            {{ UI.addButton({
+                'path': path('academic_bug_tracking_create'),
+                'entity_label': 'academic.bugtracking.issue.entity_label'|trans
+            }) }}
+        </div>
+{% endblock %}

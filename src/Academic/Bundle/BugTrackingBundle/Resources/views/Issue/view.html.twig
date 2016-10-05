@@ -1,0 +1,50 @@
+{% extends 'OroUIBundle:actions:view.html.twig' %}
+{% import 'OroDataGridBundle::macros.html.twig' as dataGrid %}
+
+{% oro_title_set({params : {"%code%": entity.code|default('N/A'|trans) } }) %}
+
+{% block pageHeader %}
+    {% set breadcrumbs = {
+    'entity': entity,
+    'indexPath': path('academic_bug_tracking_index'),
+    'indexLabel': 'academic.bugtracking.issue.entity_plural_label'|trans,
+    'entityTitle': entity.code
+    } %}
+    {{ parent() }}
+{% endblock pageHeader %}
+
+{% block content_data %}
+    {% set id = 'issue-view' %}
+    {%- set generalInformation -%}
+        <div class="responsive-section">
+            <div class="responsive-cell">
+                {{ UI.renderProperty('academic.bugtracking.issue.code.label'|trans, entity.code) }}
+                {{ UI.renderProperty('academic.bugtracking.issue.type.label'|trans, entity.type) }}
+                {{ UI.renderProperty('academic.bugtracking.issue.resolution.label'|trans, entity.resolution) }}
+                {{ UI.renderProperty('academic.bugtracking.issue.priority.label'|trans, entity.priority) }}
+                {{ UI.renderProperty('academic.bugtracking.issue.summary.label'|trans, entity.summary) }}
+                {{ UI.renderProperty('academic.bugtracking.issue.description.label'|trans, entity.description) }}
+            </div>
+            <div class="responsive-cell">
+                {{ UI.renderProperty('academic.bugtracking.issue.reporter.label'|trans, entity.reporter.username) }}
+                {{ UI.renderProperty('academic.bugtracking.issue.assignee.label'|trans, entity.assignee.username) }}
+                {{ UI.renderProperty('academic.bugtracking.issue.created_at.label'|trans, entity.createdAt|oro_format_datetime) }}
+                {{ UI.renderProperty('academic.bugtracking.issue.updated_at.label'|trans, entity.updatedAt|oro_format_datetime) }}
+                {{ UI.renderProperty('academic.bugtracking.issue.collaborators.label'|trans, entity.collaborators) }}
+            </div>
+        </div>
+    {%- endset -%}
+    {% set dataBlocks = [
+    {
+    'title': 'academic.bugtracking.block.general'|trans,
+    'class': 'active',
+    'subblocks': [
+    {'data' : [generalInformation]}
+    ]
+    }
+    ] %}
+
+    {% set data = {'dataBlocks': dataBlocks} %}
+
+    {{ parent() }}
+{% endblock content_data %}
