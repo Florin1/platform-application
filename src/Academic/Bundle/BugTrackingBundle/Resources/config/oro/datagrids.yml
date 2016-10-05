@@ -1,0 +1,92 @@
+datagrids:
+    bug-tracking-issuegrid:
+        extended_entity_name: '%academic.bug_tracking.issue.class%'
+        source:
+            type: orm
+            query:
+                select:
+                    - issue.id
+                    - issue.code
+                    - issue.summary
+                    - issueType.name as issueTypeName
+                    - issuePriority.name as issuePriorityName
+                    - issueReporter.username as issueReporterUsername
+                    - issueAssignee.username as issueAssigneeUsername
+                    - issue.createdAt
+                    - issue.updatedAt
+                from:
+                    - { table: '%academic.bug_tracking.issue.class%', alias: issue }
+                join:
+                    left:
+                        - { join: issue.type, alias: issueType}
+                        - { join: issue.priority, alias: issuePriority}
+                        - { join: issue.reporter, alias: issueReporter}
+                        - { join: issue.assignee, alias: issueAssignee}
+        columns:
+            code:
+                label: academic.bugtracking.issue.code.label
+            summary:
+                label: academic.bugtracking.issue.summary.label
+            type:
+                label: academic.bugtracking.issue.type.label
+            priority:
+                label: academic.bugtracking.issue.priority.label
+            resolution:
+                label: academic.bugtracking.issue.resolution.label
+            reporter:
+                label: academic.bugtracking.issue.reporter.label
+            assignee:
+                label: academic.bugtracking.issue.assignee.label
+            createdAt:
+                label: academic.bugtracking.issue.created_at.label
+                frontend_type: datetime
+            updatedAt:
+                label: academic.bugtracking.issue.updated_at.label
+                frontend_type: datetime
+        sorters:
+            columns:
+                code:
+                    data_name: issue.code
+                summary:
+                    data_name: issue.summary
+                type:
+                    data_name: issueTypeName
+                priority:
+                    data_name: issuePriorityName
+                resolution:
+                    data_name: issue.resolution
+                reporter:
+                    data_name: issueReporterUsername
+                assignee:
+                    data_name: issueAssigneeUsername
+                createdAt:
+                    data_name: issue.createdAt
+                updatedAt:
+                    data_name: issue.updatedAt
+            default:
+                updatedAt: DESC
+        properties:
+            id: ~
+            update_link:
+                type: url
+                route: academic_bug_tracking_update
+                params:
+                    - id
+            view_link:
+                type: url
+                route: academic_bug_tracking_view
+                params:
+                    - id
+        actions:
+            edit:
+                type: navigate
+                label: academic.bugtracking.grid.actions.edit.label
+                link: update_link
+                icon: edit
+            view:
+                type: navigate
+                label: academic.bugtracking.grid.actions.view.label
+                link: view_link
+                icon: view
+                rowAction:  true
+

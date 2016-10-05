@@ -1,0 +1,46 @@
+academic:
+    bugtracking:
+        issue:
+            entity_plural_label: 'Issues'
+            entity_label: 'Issue'
+            saved_message: 'Successfully saved issue'
+            type:
+                label: 'Type'
+            summary:
+                label: 'Summary'
+            code:
+                label: 'Code'
+            description:
+                label: 'Description'
+            priority:
+                label: 'Priority'
+            resolution:
+                label: 'Resolution'
+            status:
+                label: 'Status'
+            created_at:
+                label: 'Created at'
+            updated_at:
+                label: 'Updated at'
+            reporter:
+                label: 'Reporter'
+            assignee:
+                label: 'Assignee'
+            children:
+                label: 'Children'
+            collaborators:
+                label: 'Collaborators'
+            id:
+                label: 'Id'
+            parent:
+                label: 'Parent'
+            tags:
+                label: 'tags'
+        block:
+            general: 'General Information'
+        grid:
+            actions:
+                view:
+                    label: 'View'
+                edit:
+                    label: 'Edit'
