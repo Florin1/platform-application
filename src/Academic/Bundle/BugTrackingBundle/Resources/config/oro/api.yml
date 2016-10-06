@@ -1,0 +1,3 @@
+api:
+    entities:
+        Academic\Bundle\BugTrackingBundle\Entity\Issue: ~
