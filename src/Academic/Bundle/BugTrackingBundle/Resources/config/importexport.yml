@@ -1,0 +1,38 @@
+parameters:
+    academic.bug_tracking.importexport.template_fixture.issue.class:    Academic\Bundle\BugTrackingBundle\ImportExport\TemplateFixture\IssueFixture
+
+services:
+     academic.bug_tracking.importexport.data_converter:
+        parent: oro_importexport.data_converter.configurable
+
+     academic.bug_tracking.importexport.strategy.issue.add_or_replace:
+        parent: oro_importexport.strategy.configurable_add_or_replace
+
+
+     academic.bug_tracking.importexport.processor.export_template:
+        parent: oro_importexport.processor.export_abstract
+        calls:
+            - [setDataConverter, ['@academic.bug_tracking.importexport.data_converter']]
+        tags:
+            - { name: oro_importexport.processor, type: export_template, entity: '%academic.bug_tracking.issue.class%' , alias:  academic.bug_tracking_issue}
+
+     academic.bug_tracking.importexport.processor.export:
+        parent: oro_importexport.processor.export_abstract
+        calls:
+            - [setDataConverter, ['@academic.bug_tracking.importexport.data_converter']]
+        tags:
+            - { name: oro_importexport.processor, type: export, entity: '%academic.bug_tracking.issue.class%', alias:  academic.bug_tracking_issue }
+
+     academic.bug_tracking.importexport.processor.import:
+        parent: oro_importexport.processor.import_abstract
+        calls:
+            - [setDataConverter, ['@academic.bug_tracking.importexport.data_converter']]
+            - [setStrategy, ['@academic.bug_tracking.importexport.strategy.issue.add_or_replace']]
+        tags:
+            - { name: oro_importexport.processor, type: import, entity: '%academic.bug_tracking.issue.class%', alias:  academic.bug_tracking_issue }
+            - { name: oro_importexport.processor, type: import_validation, entity: '%academic.bug_tracking.issue.class%', alias:  academic.bug_tracking_issue }
+
+     academic.bug_tracking.importexport.template_fixture.issue:
+         class: '%academic.bug_tracking.importexport.template_fixture.issue.class%'
+         tags:
+             - { name: oro_importexport.template_fixture }

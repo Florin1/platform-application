@@ -4,10 +4,19 @@
 {% set pageTitle = 'academic.bugtracking.issue.entity_plural_label'|trans %}
 
 {% block navButtons %}
-        <div class="btn-group pull-right">
-            {{ UI.addButton({
-                'path': path('academic_bug_tracking_create'),
-                'entity_label': 'academic.bugtracking.issue.entity_label'|trans
-            }) }}
-        </div>
+    {% include 'OroImportExportBundle:ImportExport:buttons.html.twig' with {
+    entity_class: 'Academic\\Bundle\\BugTrackingBundle\\Entity\\Issue',
+    exportProcessor: 'academic.bug_tracking_issue',
+    exportTemplateProcessor: 'academic.bug_tracking_issue',
+    exportTitle: 'Export',
+    importProcessor: 'academic.bug_tracking_issue',
+    importTitle: 'Import',
+    dataGridName: gridName
+    } %}
+    <div class="btn-group pull-right">
+        {{ UI.addButton({
+            'path': path('academic_bug_tracking_create'),
+            'entity_label': 'academic.bugtracking.issue.entity_label'|trans
+        }) }}
+    </div>
 {% endblock %}
