@@ -5,13 +5,14 @@ namespace Academic\Bundle\BugTrackingBundle\Migrations\Schema;
 use Doctrine\DBAL\Schema\Schema;
 use Oro\Bundle\MigrationBundle\Migration\Installation;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
-use Academic\Bundle\BugTrackingBundle\Migrations\Schema\v1_0\AcademicBugTrackingBundle;
 use Oro\Bundle\EntityExtendBundle\Migration\Extension\ExtendExtension;
 use Oro\Bundle\EntityExtendBundle\Migration\Extension\ExtendExtensionAwareInterface;
 use Oro\Bundle\NoteBundle\Migration\Extension\NoteExtension;
 use Oro\Bundle\NoteBundle\Migration\Extension\NoteExtensionAwareInterface;
 use Oro\Bundle\ActivityBundle\Migration\Extension\ActivityExtension;
 use Oro\Bundle\ActivityBundle\Migration\Extension\ActivityExtensionAwareInterface;
+use Academic\Bundle\BugTrackingBundle\Migrations\Schema\v1_0\AcademicBugTrackingBundle;
+use Academic\Bundle\BugTrackingBundle\Migrations\Schema\v1_1\AcademicBugTrackingBundle as AcademicBugTrackingBundle11;
 
 class AcademicBugTrackingBundleInstaller implements
     Installation,
@@ -57,7 +58,7 @@ class AcademicBugTrackingBundleInstaller implements
      */
     public function getMigrationVersion()
     {
-        return 'v1_0';
+        return 'v1_1';
     }
 
     /**
@@ -72,5 +73,7 @@ class AcademicBugTrackingBundleInstaller implements
         AcademicBugTrackingBundle::addEnums($schema, $this->extendExtension);
         AcademicBugTrackingBundle::addNote($schema, $this->noteExtension);
         AcademicBugTrackingBundle::addActivityAssociations($schema, $this->activityExtension);
+
+        AcademicBugTrackingBundle11::addStatusEnums($schema, $this->extendExtension);
     }
 }

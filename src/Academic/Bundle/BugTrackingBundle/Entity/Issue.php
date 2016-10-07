@@ -27,6 +27,7 @@ class Issue extends ExtendIssue
     const RESOLUTION_ENUM_CODE = 'oac_issue_resolution';
     const TYPE_ENUM_CODE = 'oac_issue_type';
     const PRIORITY_ENUM_CODE = 'oac_issue_priority';
+    const STATUS_ENUM_CODE = 'oac_issue_status';
 
     const TYPE_TASK = 'task';
     const TYPE_SUBTASK = 'subtask';
@@ -42,6 +43,12 @@ class Issue extends ExtendIssue
     const RESOLUTION_INCOMPLETE = 'incomplete';
     const RESOLUTION_CANNOT_REPRODUCE = 'cannot_reproduce';
     const RESOLUTION_DONE = 'done';
+
+    const STATUS_OPEN = 'open';
+    const STATUS_IN_PROGRESS = 'in_progress';
+    const STATUS_CLOSED = 'closed';
+    const STATUS_RESOLVED = 'resolved';
+    const STATUS_REOPENED = 'reopened';
 
     /**
      * @var integer

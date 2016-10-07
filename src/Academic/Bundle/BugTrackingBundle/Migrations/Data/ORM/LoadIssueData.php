@@ -83,11 +83,41 @@ class LoadIssueEnumsData extends AbstractFixture
         ],
     ];
 
+    /** @var array */
+    protected $statusEnumData = [
+        Issue::STATUS_OPEN => [
+            'label' => 'Open',
+            'priority' => 1,
+            'default' => true
+        ],
+        Issue::STATUS_IN_PROGRESS => [
+            'label' => 'In progress',
+            'priority' => 2,
+            'default' => false
+        ],
+        Issue::STATUS_CLOSED => [
+            'label' => 'Closed',
+            'priority' => 3,
+            'default' => false
+        ],
+        Issue::STATUS_RESOLVED => [
+            'label' => 'Resolved',
+            'priority' => 4,
+            'default' => false
+        ],
+        Issue::STATUS_REOPENED => [
+            'label' => 'Reopened',
+            'priority' => 5,
+            'default' => false
+        ],
+    ];
+
     public function load(ObjectManager $manager)
     {
         $this->loadData($manager, Issue::PRIORITY_ENUM_CODE, $this->priorityEnumData);
         $this->loadData($manager, Issue::TYPE_ENUM_CODE, $this->typeEnumData);
         $this->loadData($manager, Issue::RESOLUTION_ENUM_CODE, $this->resolutionEnumData);
+        $this->loadData($manager, Issue::STATUS_ENUM_CODE, $this->statusEnumData);
     }
 
     /**

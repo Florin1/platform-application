@@ -1,0 +1,110 @@
+workflows:
+    bug_tracking_flow_issues:
+        label: Bug Tracking Issues Flow
+        defaults:
+            active: true
+        entity: Academic\Bundle\BugTrackingBundle\Entity\Issue
+        entity_attribute: issue
+        start_step: open
+        steps_display_ordered: true
+        steps:
+            open:
+                label: 'Open'
+                order: 10
+                allowed_transitions: ['start_progress', 'resolve', 'close']
+            in_progress:
+                label: 'In Progress'
+                order: 10
+                allowed_transitions: ['stop_progress', 'resolve', 'close']
+            closed:
+                label: 'Closed'
+                order: 10
+                allowed_transitions: ['reopen']
+            resolved:
+                label: 'Resolved'
+                order: 10
+                allowed_transitions: ['close', 'reopen']
+            reopened:
+                label: 'Reopened'
+                order: 10
+                allowed_transitions: ['start_progress']
+        attributes:
+            status:
+                property_path: issue.status
+        transitions:
+            start_progress:
+                label: 'Start Progress'
+                step_to: in_progress
+                transition_definition: status_in_progress_definition
+            stop_progress:
+                label: 'Stop Progress'
+                step_to: open
+                transition_definition: status_open_definition
+            resolve:
+                label: 'Rezolve'
+                step_to: resolved
+                transition_definition: status_resolved_definition
+            close:
+                label: 'Close'
+                step_to: closed
+                transition_definition: status_closed_definition
+            reopen:
+                label: 'Reopen'
+                step_to: reopened
+                transition_definition: status_reopened_definition
+        transition_definitions:
+            status_in_progress_definition:
+                actions:
+                    - '@call_service_method':
+                        service: oro_entity_extend.enum_value_provider
+                        method: getEnumValueByCode
+                        method_parameters: ['oac_issue_status', 'in_progress']
+                        attribute: $.result.status
+                    - @assign_value:
+                        conditions:
+                            '@not_empty': [$.result.status]
+                        parameters: [$status, $.result.status]
+            status_open_definition:
+                actions:
+                    - '@call_service_method':
+                        service: oro_entity_extend.enum_value_provider
+                        method: getEnumValueByCode
+                        method_parameters: ['oac_issue_status', 'open']
+                        attribute: $.result.status
+                    - @assign_value:
+                        conditions:
+                            '@not_empty': [$.result.status]
+                        parameters: [$status, $.result.status]
+            status_resolved_definition:
+                actions:
+                    - '@call_service_method':
+                        service: oro_entity_extend.enum_value_provider
+                        method: getEnumValueByCode
+                        method_parameters: ['oac_issue_status', 'resolved']
+                        attribute: $.result.status
+                    - @assign_value:
+                        conditions:
+                            '@not_empty': [$.result.status]
+                        parameters: [$status, $.result.status]
+            status_closed_definition:
+                actions:
+                    - '@call_service_method':
+                        service: oro_entity_extend.enum_value_provider
+                        method: getEnumValueByCode
+                        method_parameters: ['oac_issue_status', 'closed']
+                        attribute: $.result.status
+                    - @assign_value:
+                        conditions:
+                            '@not_empty': [$.result.status]
+                        parameters: [$status, $.result.status]
+            status_reopened_definition:
+                actions:
+                    - '@call_service_method':
+                        service: oro_entity_extend.enum_value_provider
+                        method: getEnumValueByCode
+                        method_parameters: ['oac_issue_status', 'reopened']
+                        attribute: $.result.status
+                    - @assign_value:
+                        conditions:
+                            '@not_empty': [$.result.status]
+                        parameters: [$status, $.result.status]
