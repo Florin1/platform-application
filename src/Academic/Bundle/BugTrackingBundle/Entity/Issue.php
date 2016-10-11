@@ -352,6 +352,7 @@ class Issue extends ExtendIssue
     public function setAssignee(User $assignee = null)
     {
         $this->assignee = $assignee;
+        $this->handleCollaborator($assignee);
 
         return $this;
     }
@@ -374,6 +375,7 @@ class Issue extends ExtendIssue
     public function setReporter(User $reporter = null)
     {
         $this->reporter = $reporter;
+        $this->handleCollaborator($reporter);
 
         return $this;
     }
@@ -496,5 +498,31 @@ class Issue extends ExtendIssue
     public function setPreUpdateValues()
     {
         $this->updatedAt = new \DateTime();
+    }
+
+    /**
+     * Check if user is collaborator
+     *
+     * @param User $user
+     * @return bool
+     */
+    public function isCollaborator(User $user)
+    {
+        return $this->collaborators->contains($user);
+    }
+
+    /**
+     * Handle collaborator
+     *
+     * @param User $user
+     * @return $this
+     */
+    public function handleCollaborator(User $user = null)
+    {
+        if (!is_null($user) && !$this->isCollaborator($user)) {
+            $this->addCollaborator($user);
+        }
+
+        return $this;
     }
 }

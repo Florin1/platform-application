@@ -1,0 +1,51 @@
+processes:
+    definitions:
+        issue_note_definition:
+            label: 'Issue note definition'
+            enabled: true
+            entity: Oro\Bundle\NoteBundle\Entity\Note
+            exclude_definitions: [issue_note_definition]
+            actions_configuration:
+                - '@tree':
+                    actions:
+                        - @call_method:
+                            object: $.data
+                            method: supportTarget
+                            method_parameters: ['Academic\Bundle\BugTrackingBundle\Entity\Issue']
+                            attribute: $.issueInstance
+                        - '@tree':
+                            conditions:
+                                '@equal': [$.issueInstance, true]
+                            actions:
+                                - @call_method:
+                                    object: $.data
+                                    method: getTarget
+                                    attribute: $.issue
+                                - @call_method:
+                                    conditions:
+                                        @not_empty: $.issue
+                                        @not_empty: $.data.owner
+                                    object: $.issue
+                                    method: isCollaborator
+                                    method_parameters: [$.data.owner]
+                                    attribute: $.isCollaborator
+                                - @find_entity:
+                                    conditions:
+                                        @and:
+                                            - @not_empty: $.data.owner
+                                            - @equal: [$.isCollaborator, false]
+                                    parameters:
+                                        class: Oro\Bundle\UserBundle\Entity\User
+                                        attribute: $.resultUser
+                                        where:
+                                            username: $.data.owner.username
+                                - '@call_method':
+                                        conditions:
+                                            @not_empty: $.resultUser
+                                        object: $.issue
+                                        method: addCollaborator
+                                        method_parameters: [$.resultUser]
+    triggers:
+        issue_note_definition:
+            -
+                event: create

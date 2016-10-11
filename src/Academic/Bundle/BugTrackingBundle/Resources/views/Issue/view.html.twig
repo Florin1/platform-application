@@ -30,7 +30,14 @@
                 {{ UI.renderProperty('academic.bugtracking.issue.assignee.label'|trans, entity.assignee.username) }}
                 {{ UI.renderProperty('academic.bugtracking.issue.created_at.label'|trans, entity.createdAt|oro_format_datetime) }}
                 {{ UI.renderProperty('academic.bugtracking.issue.updated_at.label'|trans, entity.updatedAt|oro_format_datetime) }}
-                {{ UI.renderProperty('academic.bugtracking.issue.collaborators.label'|trans, entity.collaborators) }}
+                <div class="control-group">
+                    <label class="control-label">{{ 'academic.bugtracking.issue.collaborators.label'|trans }}</label>
+                    <div class="controls">
+                        {% for collaborator in entity.collaborators %}
+                            {{ UI.entityViewLink(collaborator, collaborator.username, 'oro_user_view') }}
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
         </div>
     {%- endset -%}
