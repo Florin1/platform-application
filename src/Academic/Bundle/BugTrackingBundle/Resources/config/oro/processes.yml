@@ -45,6 +45,9 @@ processes:
                                         object: $.issue
                                         method: addCollaborator
                                         method_parameters: [$.resultUser]
+                                - '@call_method':
+                                        object: $.issue
+                                        method: setPreUpdateValues
     triggers:
         issue_note_definition:
             -
