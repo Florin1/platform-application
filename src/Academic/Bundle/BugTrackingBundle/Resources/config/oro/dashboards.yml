@@ -1,0 +1,9 @@
+dashboards:
+    widgets:
+        recent_issues:
+            label: oro.dashboard.recent_issues.title
+            route: oro_dashboard_widget
+            route_parameters:
+                bundle: AcademicBugTrackingBundle
+                name: recent_issues_widget
+            description: oro.dashboard.recent_issues.description

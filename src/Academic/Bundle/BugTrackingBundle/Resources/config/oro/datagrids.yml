@@ -1,5 +1,5 @@
 datagrids:
-    bug-tracking-issuegrid:
+    bug-tracking-issues-grid:
         extended_entity_name: '%academic.bug_tracking.issue.class%'
         source:
             type: orm
@@ -68,6 +68,38 @@ datagrids:
                     data_name: issue.updatedAt
             default:
                 updatedAt: DESC
+        filters:
+            columns:
+                code:
+                    type: string
+                    data_name: issue.code
+                summary:
+                    type: string
+                    data_name: issue.summary
+                issueTypeName:
+                    type:      enum
+                    data_name: issueTypeName
+                    enum_code: oac_issue_type
+                issuePriorityName:
+                    type:      enum
+                    data_name: issuePriorityName
+                    enum_code: oac_issue_priority
+                issueResolutionName:
+                    type:      enum
+                    data_name: issueResolutionName
+                    enum_code: oac_issue_resolution
+                issueReporterUsername:
+                    type: string
+                    data_name: issueReporterUsername
+                issueAssigneeUsername:
+                    type: string
+                    data_name: issueAssigneeUsername
+                createdAt:
+                    type: datetime
+                    data_name: createdAt
+                updatedAt:
+                    type: datetime
+                    data_name: updatedAt
         properties:
             id: ~
             update_link:
@@ -93,3 +125,22 @@ datagrids:
                 icon: view
                 rowAction:  true
 
+    bug-tracking-issues-recent-grid:
+        extends: bug-tracking-issues-grid
+        source:
+            query:
+                where:
+                    and:
+                        - :user_id MEMBER OF issue.collaborators
+            bind_parameters:
+                - user_id
+        filters: ~
+        sorters: ~
+        options:
+            toolbarOptions:
+                hide: true
+                pagination:
+                    onePage: true
+                pageSize:
+                    items: [10]
+                    default_per_page: 10

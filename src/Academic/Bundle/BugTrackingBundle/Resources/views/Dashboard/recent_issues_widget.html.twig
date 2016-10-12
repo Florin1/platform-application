@@ -1,0 +1,17 @@
+{% extends 'OroDashboardBundle:Dashboard:widget.html.twig' %}
+{% import 'OroDataGridBundle::macros.html.twig' as dataGrid %}
+
+{% block content %}
+    {{ parent() }}
+    {{ dataGrid.renderGrid('bug-tracking-issues-recent-grid', {'user_id': app.user.id}) }}
+{% endblock %}
+
+{% block actions %}
+    {% set actions = [{
+    'url': path('academic_bug_tracking_index'),
+    'type': 'link',
+    'label': 'oro.dashboard.recent_issues.view_all'|trans,
+    }] %}
+
+    {{ parent() }}
+{% endblock %}
