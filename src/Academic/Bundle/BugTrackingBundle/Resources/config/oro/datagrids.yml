@@ -10,6 +10,8 @@ datagrids:
                     - issue.summary
                     - issueType.name as issueTypeName
                     - issuePriority.name as issuePriorityName
+                    - issuePriority.priority as issuePriorityValue
+                    - issueResolution.name as issueResolutionName
                     - issueReporter.username as issueReporterUsername
                     - issueAssignee.username as issueAssigneeUsername
                     - issue.createdAt
@@ -22,20 +24,21 @@ datagrids:
                         - { join: issue.priority, alias: issuePriority}
                         - { join: issue.reporter, alias: issueReporter}
                         - { join: issue.assignee, alias: issueAssignee}
+                        - { join: issue.resolution, alias: issueResolution}
         columns:
             code:
                 label: academic.bugtracking.issue.code.label
             summary:
                 label: academic.bugtracking.issue.summary.label
-            type:
+            issueTypeName:
                 label: academic.bugtracking.issue.type.label
-            priority:
+            issuePriorityName:
                 label: academic.bugtracking.issue.priority.label
-            resolution:
+            issueResolutionName:
                 label: academic.bugtracking.issue.resolution.label
-            reporter:
+            issueReporterUsername:
                 label: academic.bugtracking.issue.reporter.label
-            assignee:
+            issueAssigneeUsername:
                 label: academic.bugtracking.issue.assignee.label
             createdAt:
                 label: academic.bugtracking.issue.created_at.label
@@ -49,15 +52,15 @@ datagrids:
                     data_name: issue.code
                 summary:
                     data_name: issue.summary
-                type:
+                issueTypeName:
                     data_name: issueTypeName
-                priority:
-                    data_name: issuePriorityName
-                resolution:
-                    data_name: issue.resolution
-                reporter:
+                issuePriorityName:
+                    data_name: issuePriorityValue
+                issueResolutionName:
+                    data_name: issueResolutionName
+                issueReporterUsername:
                     data_name: issueReporterUsername
-                assignee:
+                issueAssigneeUsername:
                     data_name: issueAssigneeUsername
                 createdAt:
                     data_name: issue.createdAt

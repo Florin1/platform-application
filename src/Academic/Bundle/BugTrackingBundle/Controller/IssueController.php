@@ -24,7 +24,7 @@ class IssueController extends Controller
     public function indexAction()
     {
         return [
-            'entity_class' => $this->container->getParameter('academic.bug_tracking.form.type.issue.class')
+            'entity_class' => $this->container->getParameter('academic.bug_tracking.issue.class')
         ];
     }
 

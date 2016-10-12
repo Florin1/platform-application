@@ -164,7 +164,7 @@ class AcademicBugTrackingBundle implements
             false,
             false,
             [
-                'extend' => ['owner' => ExtendScope::OWNER_CUSTOM]
+                'extend' => ['owner' => ExtendScope::OWNER_SYSTEM]
             ]
         );
 
@@ -176,7 +176,7 @@ class AcademicBugTrackingBundle implements
             false,
             false,
             [
-                'extend' => ['owner' => ExtendScope::OWNER_CUSTOM]
+                'extend' => ['owner' => ExtendScope::OWNER_SYSTEM]
             ]
         );
 
@@ -188,7 +188,7 @@ class AcademicBugTrackingBundle implements
             false,
             false,
             [
-                'extend' => ['owner' => ExtendScope::OWNER_CUSTOM]
+                'extend' => ['owner' => ExtendScope::OWNER_SYSTEM]
             ]
         );
     }
