@@ -3,6 +3,7 @@ parameters:
     academic.bug_tracking.form.type.issue.class:       Academic\Bundle\BugTrackingBundle\Form\Type\IssueType
     academic.bug_tracking.form.handler.issue.class:    Academic\Bundle\BugTrackingBundle\Form\Handler\IssueHandler
     academic.bug_tracking.form.listener.issue.class:   Academic\Bundle\BugTrackingBundle\Form\EventListener\IssueSubscriber
+    academic.bug_tracking.provider.chart.issue.class:   Academic\Bundle\BugTrackingBundle\Provider\IssueChartDataProvider
 
 services:
     academic.bug_tracking.form.listener.issue:
@@ -26,3 +27,8 @@ services:
             - '@academic.bug_tracking.form.type.issue'
             - '@request'
             - '@doctrine.orm.entity_manager'
+
+    academic.bug_tracking.provider.chart.issue:
+        class: '%academic.bug_tracking.provider.chart.issue.class%'
+        arguments:
+            - '@oro_entity.doctrine_helper'

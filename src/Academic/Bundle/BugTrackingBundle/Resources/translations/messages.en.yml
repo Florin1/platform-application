@@ -4,7 +4,12 @@ oro:
             title:       Recent Issues
             view_all:    View All
             description: This widget displays the most recent issues
-
+        issues_chart:
+            title:       Issue status chart
+            description: This widget displays the most recent issues
+            chart:
+                label: Label
+                value: Value
 academic:
     bugtracking:
         issue:

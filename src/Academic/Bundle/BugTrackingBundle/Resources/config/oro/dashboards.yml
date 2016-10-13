@@ -7,3 +7,10 @@ dashboards:
                 bundle: AcademicBugTrackingBundle
                 name: recent_issues_widget
             description: oro.dashboard.recent_issues.description
+        issues_chart:
+            label: oro.dashboard.issues_chart.title
+            route: academic_bug_tracking_dashboard_chart
+            route_parameters:
+                bundle: AcademicBugTrackingBundle
+                name: issues_chart_widget
+            description: oro.dashboard.issues_chart.description

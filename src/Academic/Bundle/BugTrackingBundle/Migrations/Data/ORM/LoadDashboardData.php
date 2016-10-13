@@ -44,6 +44,15 @@ class LoadDashboardData extends AbstractDashboardFixture implements DependentFix
                         10
                     ]
                 )
+            )
+            ->addWidget(
+                $this->createWidgetModel(
+                    'issues_chart',
+                    [
+                        0,
+                        10
+                    ]
+                )
             );
 
         $manager->flush();

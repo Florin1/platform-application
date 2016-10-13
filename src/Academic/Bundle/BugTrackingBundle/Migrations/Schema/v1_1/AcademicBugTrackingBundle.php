@@ -49,7 +49,7 @@ class AcademicBugTrackingBundle implements
             false,
             false,
             [
-                'extend' => ['owner' => ExtendScope::OWNER_SYSTEM]
+                'extend' => ['owner' => ExtendScope::OWNER_CUSTOM]
             ]
         );
     }

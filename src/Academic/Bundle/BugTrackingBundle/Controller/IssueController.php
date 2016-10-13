@@ -2,6 +2,7 @@
 
 namespace Academic\Bundle\BugTrackingBundle\Controller;
 
+use Academic\Bundle\BugTrackingBundle\Entity\Repository\IssueRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -72,5 +73,45 @@ class IssueController extends Controller
             $this->createForm(IssueType::NAME),
             $this->get('translator')->trans('academic.bugtracking.issue.saved_message')
         );
+    }
+
+    /**
+     * @Route(
+     *      "/chart/{widget}",
+     *      name="academic_bug_tracking_dashboard_chart",
+     *      requirements={"widget"="[\w-]+"}
+     * )
+     * @Template("AcademicBugTrackingBundle:Dashboard:issues_chart_widget.html.twig")
+     */
+    public function chartAction($widget)
+    {
+        $chartProvider = $this->get('academic.bug_tracking.provider.chart.issue');
+        $items = $chartProvider->getIssueChartData();
+
+        $viewBuilder = $this->container->get('oro_chart.view_builder');
+        $view = $viewBuilder
+            ->setArrayData($items)
+            ->setOptions([
+                'name' => 'bar_chart',
+                'data_schema' => [
+                    'label' => [
+                        'field_name' => 'status',
+                        'label' => 'oro.dashboard.issues_chart.chart.label',
+                        'type' => 'string'
+                    ],
+                    'value' => [
+                        'field_name' => 'count',
+                        'label' => 'oro.dashboard.issues_chart.chart.value',
+                        'type' => 'number'
+                    ]
+                ],
+            ])
+            ->setDataMapping(array('label' => 'status', 'value' => 'count'))
+            ->getView();
+
+        $widgetAttr = $this->get('oro_dashboard.widget_configs')->getWidgetAttributesForTwig($widget);
+        $widgetAttr['chartView'] = $view;
+
+        return $widgetAttr;
     }
 }
