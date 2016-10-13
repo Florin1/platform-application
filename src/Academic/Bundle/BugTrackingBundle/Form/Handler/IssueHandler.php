@@ -2,12 +2,13 @@
 
 namespace Academic\Bundle\BugTrackingBundle\Form\Handler;
 
-use Oro\Bundle\TagBundle\Entity\TagManager;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\Common\Persistence\ObjectManager;
-use Academic\Bundle\BugTrackingBundle\Entity\Issue;
+use Oro\Bundle\TagBundle\Entity\TagManager;
+use Oro\Bundle\EntityBundle\ORM\DoctrineHelper;
 use Oro\Bundle\TagBundle\Form\Handler\TagHandlerInterface;
+use Academic\Bundle\BugTrackingBundle\Entity\Issue;
 
 class IssueHandler implements TagHandlerInterface
 {
@@ -22,25 +23,26 @@ class IssueHandler implements TagHandlerInterface
     protected $request;
 
     /**
-     * @var ObjectManager
-     */
-    protected $manager;
-
-    /**
      * @var TagManager
      */
     protected $tagManager;
 
     /**
+     * @var DoctrineHelper
+     */
+    protected $doctrineHelper;
+
+    /**
+     * IssueHandler constructor.
      * @param FormInterface $form
      * @param Request $request
-     * @param ObjectManager $manager
+     * @param DoctrineHelper $doctrineHelper
      */
-    public function __construct(FormInterface $form, Request $request, ObjectManager $manager)
+    public function __construct(FormInterface $form, Request $request, DoctrineHelper $doctrineHelper)
     {
         $this->form = $form;
         $this->request = $request;
-        $this->manager = $manager;
+        $this->doctrineHelper = $doctrineHelper;
     }
 
     /**
@@ -57,8 +59,9 @@ class IssueHandler implements TagHandlerInterface
             $this->form->submit($this->request);
 
             if ($this->form->isValid()) {
-                $this->manager->persist($entity);
-                $this->manager->flush();
+                $manager = $this->getManager(Issue::class);
+                $manager->persist($entity);
+                $manager->flush();
 
                 return true;
             }
@@ -67,8 +70,20 @@ class IssueHandler implements TagHandlerInterface
         return false;
     }
 
+    /**
+     * @param TagManager $tagManager
+     */
     public function setTagManager(TagManager $tagManager)
     {
         $this->tagManager = $tagManager;
+    }
+
+    /**
+     * @param $class
+     * @return \Doctrine\ORM\EntityManager|null
+     */
+    public function getManager($class)
+    {
+        return $this->doctrineHelper->getEntityManagerForClass($class);
     }
 }

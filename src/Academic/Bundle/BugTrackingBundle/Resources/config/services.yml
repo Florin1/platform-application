@@ -4,12 +4,12 @@ parameters:
     academic.bug_tracking.form.handler.issue.class:    Academic\Bundle\BugTrackingBundle\Form\Handler\IssueHandler
     academic.bug_tracking.form.listener.issue.class:   Academic\Bundle\BugTrackingBundle\Form\EventListener\IssueSubscriber
     academic.bug_tracking.provider.chart.issue.class:   Academic\Bundle\BugTrackingBundle\Provider\IssueChartDataProvider
+    academic.bug_tracking.placeholder.filter.issue.class:   Academic\Bundle\BugTrackingBundle\Placeholder\PlaceholderFilter
 
 services:
     academic.bug_tracking.form.listener.issue:
         class: '%academic.bug_tracking.form.listener.issue.class%'
         arguments:
-            - '@doctrine.orm.entity_manager'
             - '@form.factory'
 
     academic.bug_tracking.form.type.issue:
@@ -26,9 +26,15 @@ services:
         arguments:
             - '@academic.bug_tracking.form.type.issue'
             - '@request'
-            - '@doctrine.orm.entity_manager'
+            - '@oro_entity.doctrine_helper'
 
     academic.bug_tracking.provider.chart.issue:
         class: '%academic.bug_tracking.provider.chart.issue.class%'
         arguments:
             - '@oro_entity.doctrine_helper'
+
+    academic.bug_tracking.placeholder.filter.issue:
+        class: '%academic.bug_tracking.placeholder.filter.issue.class%'
+        scope: request
+        arguments:
+            - '@request'

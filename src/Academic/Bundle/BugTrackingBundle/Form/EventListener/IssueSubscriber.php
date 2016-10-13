@@ -2,8 +2,6 @@
 
 namespace Academic\Bundle\BugTrackingBundle\Form\EventListener;
 
-use Doctrine\Common\Persistence\ObjectManager;
-
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -15,11 +13,6 @@ use Oro\Bundle\UserBundle\Entity\User;
 class IssueSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var ObjectManager
-     */
-    protected $objectManager;
-
-    /**
      * Form factory.
      *
      * @var FormFactoryInterface
@@ -27,14 +20,11 @@ class IssueSubscriber implements EventSubscriberInterface
     protected $factory;
 
     /**
-     * Constructor.
-     *
-     * @param ObjectManager $objectManager
+     * IssueSubscriber constructor.
      * @param FormFactoryInterface $factory
      */
-    public function __construct(ObjectManager $objectManager, FormFactoryInterface $factory)
+    public function __construct(FormFactoryInterface $factory)
     {
-        $this->objectManager = $objectManager;
         $this->factory = $factory;
     }
 

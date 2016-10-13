@@ -1,0 +1,11 @@
+placeholders:
+    placeholders:
+        view_content_data_additional_information:
+            items:
+                bug_tracking_user_issues:
+                    order: 100
+
+    items:
+        bug_tracking_user_issues:
+            template: AcademicBugTrackingBundle:User:issuesGrid.html.twig
+            applicable: "@academic.bug_tracking.placeholder.filter.issue->isUserViewRoute()"

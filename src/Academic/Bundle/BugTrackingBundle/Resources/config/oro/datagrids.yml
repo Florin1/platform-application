@@ -125,7 +125,7 @@ datagrids:
                 icon: view
                 rowAction:  true
 
-    bug-tracking-issues-recent-grid:
+    bug-tracking-issues-user-grid:
         extends: bug-tracking-issues-grid
         source:
             query:
@@ -134,6 +134,9 @@ datagrids:
                         - :user_id MEMBER OF issue.collaborators
             bind_parameters:
                 - user_id
+
+    bug-tracking-issues-recent-grid:
+        extends: bug-tracking-issues-user-grid
         filters: ~
         sorters: ~
         options:
