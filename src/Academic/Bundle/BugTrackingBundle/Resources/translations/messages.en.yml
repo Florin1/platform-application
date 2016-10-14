@@ -15,6 +15,7 @@ academic:
         issue:
             entity_plural_label: 'Issues'
             entity_label: 'Issue'
+            create_issue: 'Create Issue'
             saved_message: 'Successfully saved issue'
             type:
                 label: 'Type'

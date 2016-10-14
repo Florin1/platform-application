@@ -67,9 +67,9 @@ class AcademicBugTrackingBundleInstaller implements
     public function up(Schema $schema, QueryBag $queries)
     {
         AcademicBugTrackingBundle::createOroAcademicIssueTable($schema);
-        AcademicBugTrackingBundle::createOroAcademicIssuesCollaboratorsTable($schema);
+        AcademicBugTrackingBundle::createOroAcademicIssueUserTable($schema);
         AcademicBugTrackingBundle::addOroAcademicIssueForeignKeys($schema);
-        AcademicBugTrackingBundle::addOroAcademicIssuesCollaboratorsForeignKeys($schema);
+        AcademicBugTrackingBundle::addOroAcademicIssueUserForeignKeys($schema);
         AcademicBugTrackingBundle::addEnums($schema, $this->extendExtension);
         AcademicBugTrackingBundle::addNote($schema, $this->noteExtension);
         AcademicBugTrackingBundle::addActivityAssociations($schema, $this->activityExtension);

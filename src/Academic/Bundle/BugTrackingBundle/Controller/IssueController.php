@@ -2,11 +2,10 @@
 
 namespace Academic\Bundle\BugTrackingBundle\Controller;
 
-use Academic\Bundle\BugTrackingBundle\Entity\Repository\IssueRepository;
+use Academic\Bundle\BugTrackingBundle\Form\Handler\IssueHandler;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Academic\Bundle\BugTrackingBundle\Entity\Issue;
 use Academic\Bundle\BugTrackingBundle\Form\Type\IssueType;
@@ -68,6 +67,10 @@ class IssueController extends Controller
      */
     public function update(Issue $issue)
     {
+        /** @var  IssueHandler $issueHandler */
+        $issueHandler = $this->container->get('academic.bug_tracking.form.handler.issue');
+        $issue = $issueHandler->updateIssue($issue);
+
         return $this->get('oro_form.model.update_handler')->update(
             $issue,
             $this->createForm(IssueType::NAME),

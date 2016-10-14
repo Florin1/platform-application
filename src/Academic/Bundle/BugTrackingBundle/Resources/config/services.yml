@@ -1,9 +1,9 @@
 parameters:
-    academic.bug_tracking.issue.class:                 Academic\Bundle\BugTrackingBundle\Entity\Issue
-    academic.bug_tracking.form.type.issue.class:       Academic\Bundle\BugTrackingBundle\Form\Type\IssueType
-    academic.bug_tracking.form.handler.issue.class:    Academic\Bundle\BugTrackingBundle\Form\Handler\IssueHandler
-    academic.bug_tracking.form.listener.issue.class:   Academic\Bundle\BugTrackingBundle\Form\EventListener\IssueSubscriber
-    academic.bug_tracking.provider.chart.issue.class:   Academic\Bundle\BugTrackingBundle\Provider\IssueChartDataProvider
+    academic.bug_tracking.issue.class:                      Academic\Bundle\BugTrackingBundle\Entity\Issue
+    academic.bug_tracking.form.type.issue.class:            Academic\Bundle\BugTrackingBundle\Form\Type\IssueType
+    academic.bug_tracking.form.handler.issue.class:         Academic\Bundle\BugTrackingBundle\Form\Handler\IssueHandler
+    academic.bug_tracking.form.listener.issue.class:        Academic\Bundle\BugTrackingBundle\Form\EventListener\IssueSubscriber
+    academic.bug_tracking.provider.chart.issue.class:       Academic\Bundle\BugTrackingBundle\Provider\IssueChartDataProvider
     academic.bug_tracking.placeholder.filter.issue.class:   Academic\Bundle\BugTrackingBundle\Placeholder\PlaceholderFilter
 
 services:
@@ -24,7 +24,6 @@ services:
         class: '%academic.bug_tracking.form.handler.issue.class%'
         scope: request
         arguments:
-            - '@academic.bug_tracking.form.type.issue'
             - '@request'
             - '@oro_entity.doctrine_helper'
 

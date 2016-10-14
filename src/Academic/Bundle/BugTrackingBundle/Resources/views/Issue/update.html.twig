@@ -38,6 +38,26 @@
 {% endblock pageHeader %}
 
 {% block content_data %}
+    {% if isWidgetContext %}
+        <script type="text/javascript">
+            require(['oroui/js/widget-manager', 'oroui/js/messenger'],
+                    function(widgetManager, messenger) {
+                        widgetManager.getWidgetInstance(
+                                {{ app.request.get('_wid')|json_encode|raw }},
+                                function(widget) {
+                                    widget.on('formSave', function() {
+                                        if (widget.disposing) {
+                                            return false;
+                                        }
+                                        var message = '{{ 'academic.bugtracking.issue.saved_message'|trans }}';
+                                        messenger.notificationFlashMessage('success', message);
+                                        widget.remove();
+                                    });
+                                }
+                        );
+                    });
+        </script>
+    {% endif %}
     {% set id = 'issue-edit' %}
     {% set dataBlocks = [{
     'title': 'academic.bugtracking.block.general'|trans,

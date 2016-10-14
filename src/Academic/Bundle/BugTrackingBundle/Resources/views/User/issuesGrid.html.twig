@@ -1,3 +1,28 @@
 {% import 'OroDataGridBundle::macros.html.twig' as dataGrid %}
+{% import 'OroUIBundle::macros.html.twig' as UI %}
 
+<div class="btn-group pull-right">
+    {{ UI.clientLink({
+        'dataUrl': path('academic_bug_tracking_create', oro_action_params(entity)),
+        'aCss': 'btn main-group btn-primary pull-right',
+        'label' : 'academic.bugtracking.issue.create_issue'|trans,
+        'title' : 'academic.bugtracking.issue.entity_label'|trans,
+        'widget' : {
+            'type' : 'dialog',
+            'multiple' : true,
+            'options' : {
+
+                'dialogOptions' : {
+                    'title' : 'academic.bugtracking.issue.entity_label'|trans,
+                    'allowMaximize': true,
+                    'allowMinimize': true,
+                    'dblclick': 'maximize',
+                    'maximizedHeightDecreaseBy': 'minimize-bar',
+                    'width': 1000
+                }
+            }
+            }
+        }
+    ) }}
+</div>
 {{ dataGrid.renderGrid('bug-tracking-issues-user-grid', {'user_id': app.user.id}) }}

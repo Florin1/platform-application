@@ -59,9 +59,9 @@ class AcademicBugTrackingBundle implements
     public function up(Schema $schema, QueryBag $queries)
     {
         self::createOroAcademicIssueTable($schema);
-        self::createOroAcademicIssuesCollaboratorsTable($schema);
+        self::createOroAcademicIssueUserTable($schema);
         self::addOroAcademicIssueForeignKeys($schema);
-        self::addOroAcademicIssuesCollaboratorsForeignKeys($schema);
+        self::addOroAcademicIssueUserForeignKeys($schema);
         self::addEnums($schema, $this->extendExtension);
         self::addNote($schema, $this->noteExtension);
         self::addActivityAssociations($schema, $this->activityExtension);
@@ -77,7 +77,8 @@ class AcademicBugTrackingBundle implements
         $table = $schema->createTable('oro_academic_issue');
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
         $table->addColumn('parent_id', 'integer', ['notnull' => false]);
-        $table->addColumn('user_id', 'integer', ['notnull' => false]);
+        $table->addColumn('assignee_id', 'integer', ['notnull' => false]);
+        $table->addColumn('reporter_id', 'integer', ['notnull' => false]);
         $table->addColumn('serialized_data', 'array', ['notnull' => false, 'comment' => '(DC2Type:array)']);
         $table->addColumn('summary', 'string', ['length' => 255]);
         $table->addColumn('code', 'string', ['length' => 255]);
@@ -85,8 +86,9 @@ class AcademicBugTrackingBundle implements
         $table->addColumn('createdAt', 'datetime', []);
         $table->addColumn('updatedAt', 'datetime', []);
         $table->setPrimaryKey(['id']);
-        $table->addIndex(['user_id'], 'IDX_9CC307EFA76ED395', []);
         $table->addIndex(['parent_id'], 'IDX_9CC307EF727ACA70', []);
+        $table->addIndex(['assignee_id'], 'IDX_9CC307EF59EC7D60', []);
+        $table->addIndex(['reporter_id'], 'IDX_9CC307EFE1CFE6F5', []);
     }
 
     /**
@@ -98,25 +100,31 @@ class AcademicBugTrackingBundle implements
     {
         $table = $schema->getTable('oro_academic_issue');
         $table->addForeignKeyConstraint(
+            $schema->getTable('oro_user'),
+            ['reporter_id'],
+            ['id'],
+            ['onDelete' => 'SET NULL', 'onUpdate' => null]
+        );
+        $table->addForeignKeyConstraint(
+            $schema->getTable('oro_user'),
+            ['assignee_id'],
+            ['id'],
+            ['onDelete' => 'SET NULL', 'onUpdate' => null]
+        );
+        $table->addForeignKeyConstraint(
             $schema->getTable('oro_academic_issue'),
             ['parent_id'],
             ['id'],
             ['onDelete' => null, 'onUpdate' => null]
         );
-        $table->addForeignKeyConstraint(
-            $schema->getTable('oro_user'),
-            ['user_id'],
-            ['id'],
-            ['onDelete' => 'SET NULL', 'onUpdate' => null]
-        );
     }
 
     /**
-     * Create oro_academic_issues_collaborators table
+     * Create oro_academic_issue_user table
      *
      * @param Schema $schema
      */
-    public static function createOroAcademicIssuesCollaboratorsTable(Schema $schema)
+    public static function createOroAcademicIssueUserTable(Schema $schema)
     {
         $table = $schema->createTable('oro_academic_issue_user');
         $table->addColumn('issue_id', 'integer', []);
@@ -127,22 +135,22 @@ class AcademicBugTrackingBundle implements
     }
 
     /**
-     * Add oro_academic_issues_collaborators foreign keys.
+     * Add oro_academic_issue_user foreign keys.
      *
      * @param Schema $schema
      */
-    public static function addOroAcademicIssuesCollaboratorsForeignKeys(Schema $schema)
+    public static function addOroAcademicIssueUserForeignKeys(Schema $schema)
     {
         $table = $schema->getTable('oro_academic_issue_user');
         $table->addForeignKeyConstraint(
-            $schema->getTable('oro_user'),
-            ['user_id'],
+            $schema->getTable('oro_academic_issue'),
+            ['issue_id'],
             ['id'],
             ['onDelete' => null, 'onUpdate' => null]
         );
         $table->addForeignKeyConstraint(
-            $schema->getTable('oro_academic_issue'),
-            ['issue_id'],
+            $schema->getTable('oro_user'),
+            ['user_id'],
             ['id'],
             ['onDelete' => null, 'onUpdate' => null]
         );
