@@ -35,8 +35,7 @@ class IssueHandler
         Request $request,
         DoctrineHelper $doctrineHelper,
         EntityRoutingHelper $entityRoutingHelper
-    )
-    {
+    ) {
         $this->request = $request;
         $this->doctrineHelper = $doctrineHelper;
         $this->entityRoutingHelper = $entityRoutingHelper;

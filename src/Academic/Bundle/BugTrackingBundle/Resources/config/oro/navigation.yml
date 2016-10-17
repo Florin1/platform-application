@@ -1,0 +1,20 @@
+navigation:
+    menu_config:
+        items:
+            issues_tab:
+                label: 'academic.bugtracking.menu.tab'
+                uri: '#'
+                extras:
+                    position: 30
+                    icon: icon-puzzle-piece
+
+            oro_issues_index:
+                label: 'academic.bugtracking.menu.item.grid'
+                route: 'academic_bug_tracking_index'
+
+        tree:
+            application_menu:
+                children:
+                    issues_tab:
+                        children:
+                            oro_issues_index: ~

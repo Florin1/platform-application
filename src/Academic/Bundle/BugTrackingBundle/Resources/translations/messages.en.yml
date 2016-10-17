@@ -12,6 +12,10 @@ oro:
                 value: Value
 academic:
     bugtracking:
+        menu:
+            tab: 'Issues'
+            item:
+                grid: 'Manage Issues'
         issue:
             entity_plural_label: 'Issues'
             entity_label: 'Issue'
