@@ -6,9 +6,10 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Oro\Bundle\UserBundle\Entity\User;
+use Doctrine\ORM\EntityRepository;
+use Academic\Bundle\BugTrackingBundle\Entity\Issue;
 
 class IssueSubscriber implements EventSubscriberInterface
 {
@@ -45,6 +46,7 @@ class IssueSubscriber implements EventSubscriberInterface
      */
     public function preSetData(FormEvent $event)
     {
+        /** @var Issue $issue */
         $issue = $event->getData();
         $form = $event->getForm();
 

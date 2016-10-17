@@ -13,6 +13,18 @@
     {{ parent() }}
 {% endblock pageHeader %}
 
+{% block navButtons %}
+    {{ parent() }}
+    {% if not entity.parent %}
+    <div class="btn-group pull-right">
+        {{ UI.addButton({
+            'path': path('academic_bug_tracking_create', oro_action_params(entity)),
+            'entity_label': 'academic.bugtracking.issue.entity_label'|trans
+        }) }}
+    </div>
+    {% endif %}
+{% endblock %}
+
 {% block content_data %}
     {% set id = 'issue-view' %}
     {%- set generalInformation -%}
@@ -20,6 +32,25 @@
             <div class="responsive-cell">
                 {{ UI.renderProperty('academic.bugtracking.issue.code.label'|trans, entity.code) }}
                 {{ UI.renderProperty('academic.bugtracking.issue.type.label'|trans, entity.type) }}
+                {% if entity.type == 'Subtask' %}
+                    <div class="control-group">
+                        <label class="control-label">{{ 'academic.bugtracking.issue.parent.label'|trans }}</label>
+                        <div class="controls">
+                                {{ UI.entityViewLink(entity.parent, entity.parent.code, 'academic_bug_tracking_view') }}
+                        </div>
+                    </div>
+                {% endif %}
+                {% if entity.type == 'Task' %}
+                    <div class="control-group">
+                        <label class="control-label">{{ 'academic.bugtracking.issue.children.label'|trans }}</label>
+                        <div class="controls">
+                            {% for chield in entity.children %}
+                                {{ UI.entityViewLink(chield, chield.code, 'academic_bug_tracking_view') }}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
                 {{ UI.renderProperty('academic.bugtracking.issue.resolution.label'|trans, entity.resolution) }}
                 {{ UI.renderProperty('academic.bugtracking.issue.priority.label'|trans, entity.priority) }}
                 {{ UI.renderProperty('academic.bugtracking.issue.summary.label'|trans, entity.summary) }}

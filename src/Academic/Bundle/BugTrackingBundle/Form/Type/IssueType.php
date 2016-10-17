@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Academic\Bundle\BugTrackingBundle\Entity\Issue;
 use Academic\Bundle\BugTrackingBundle\Form\EventListener\IssueSubscriber;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class IssueType extends AbstractType
 {
@@ -62,25 +63,34 @@ class IssueType extends AbstractType
                 [
                     'label' => 'academic.bugtracking.issue.description.label',
                 ]
-            )
-            ->add(
+            );
+        if (!$builder->getData()->hasParent()) {
+            $builder->add(
                 'type',
                 EnumSelectType::class,
                 [
                     'label' => 'academic.bugtracking.issue.type.label',
                     'enum_code' => Issue::TYPE_ENUM_CODE,
-                    'configs' => ['allowClear' => false]
+                    'configs' => ['allowClear' => false],
+                    'excluded_values' => [Issue::TYPE_SUBTASK]
                 ]
-            )
-            ->add(
-                'priority',
-                EnumSelectType::class,
-                [
-                    'label' => 'academic.bugtracking.issue.priority.label',
-                    'enum_code' => Issue::PRIORITY_ENUM_CODE,
-                    'configs' => ['allowClear' => false]
-                ]
-            )
+            );
+        } else {
+            $builder->add(
+                'parent',
+                EntityType::class, array(
+                'class' => Issue::class,
+            ));
+        };
+        $builder->add(
+            'priority',
+            EnumSelectType::class,
+            [
+                'label' => 'academic.bugtracking.issue.priority.label',
+                'enum_code' => Issue::PRIORITY_ENUM_CODE,
+                'configs' => ['allowClear' => false]
+            ]
+        )
             ->add(
                 'resolution',
                 EnumSelectType::class,

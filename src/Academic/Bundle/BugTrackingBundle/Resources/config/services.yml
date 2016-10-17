@@ -26,6 +26,7 @@ services:
         arguments:
             - '@request'
             - '@oro_entity.doctrine_helper'
+            - '@oro_entity.routing_helper'
 
     academic.bug_tracking.provider.chart.issue:
         class: '%academic.bug_tracking.provider.chart.issue.class%'

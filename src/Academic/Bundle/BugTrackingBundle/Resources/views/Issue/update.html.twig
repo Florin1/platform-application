@@ -15,8 +15,8 @@
 
     {% if entity.id %}
         {% set html = html ~ UI.saveAndCloseButton({
-            'route': 'academic_bug_tracking_view',
-            'params': {'id': entity.id}
+        'route': 'academic_bug_tracking_view',
+        'params': {'id': entity.id}
         }) %}
     {% endif %}
     {{ UI.dropdownSaveButton({'html': html}) }}
@@ -41,11 +41,11 @@
     {% if isWidgetContext %}
         <script type="text/javascript">
             require(['oroui/js/widget-manager', 'oroui/js/messenger'],
-                    function(widgetManager, messenger) {
+                    function (widgetManager, messenger) {
                         widgetManager.getWidgetInstance(
                                 {{ app.request.get('_wid')|json_encode|raw }},
-                                function(widget) {
-                                    widget.on('formSave', function() {
+                                function (widget) {
+                                    widget.on('formSave', function () {
                                         if (widget.disposing) {
                                             return false;
                                         }
@@ -59,21 +59,32 @@
         </script>
     {% endif %}
     {% set id = 'issue-edit' %}
+    {% set formData = [
+    form_row(form.code),
+    form_row(form.summary),
+    form_row(form.description)
+    ] %}
+
+    {% if form.type is defined %}
+        {% set formData = formData|merge([form_row(form.type)]) %}
+    {% else %}
+        {% set formData = formData|merge([form_row(form.parent)]) %}
+    {% endif %}
+
+    {% set formData =
+    formData|merge([
+    form_row(form.priority),
+    form_row(form.resolution),
+    form_row(form.assignee),
+    form_row(form.reporter)
+    ]) %}
+
     {% set dataBlocks = [{
     'title': 'academic.bugtracking.block.general'|trans,
     'class': 'active',
     'subblocks': [{
     'title': '',
-    'data': [
-    form_row(form.code),
-    form_row(form.summary),
-    form_row(form.description),
-    form_row(form.type),
-    form_row(form.priority),
-    form_row(form.resolution),
-    form_row(form.assignee),
-    form_row(form.reporter),
-    ]
+    'data': formData
     }]
     }] %}
 

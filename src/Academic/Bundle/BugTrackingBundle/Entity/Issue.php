@@ -525,4 +525,18 @@ class Issue extends ExtendIssue
 
         return $this;
     }
+
+    /**
+     * Checks if issue has parent
+     * @return bool
+     */
+    public function hasParent()
+    {
+        return !is_null($this->parent);
+    }
+
+    public function __toString()
+    {
+        return $this->code ? $this->code : '';
+    }
 }

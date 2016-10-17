@@ -73,7 +73,7 @@ class IssueController extends Controller
 
         return $this->get('oro_form.model.update_handler')->update(
             $issue,
-            $this->createForm(IssueType::NAME),
+            $this->createForm(IssueType::NAME, $issue),
             $this->get('translator')->trans('academic.bugtracking.issue.saved_message')
         );
     }
