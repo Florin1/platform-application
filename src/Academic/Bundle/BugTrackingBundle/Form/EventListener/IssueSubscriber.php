@@ -7,8 +7,10 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Oro\Bundle\UserBundle\Entity\User;
+
 use Doctrine\ORM\EntityRepository;
+
+use Oro\Bundle\UserBundle\Entity\User;
 use Academic\Bundle\BugTrackingBundle\Entity\Issue;
 
 class IssueSubscriber implements EventSubscriberInterface

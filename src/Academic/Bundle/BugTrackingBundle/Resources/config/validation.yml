@@ -16,3 +16,4 @@ Academic\Bundle\BugTrackingBundle\Entity\Issue:
              - NotBlank: ~
         priority:
              - NotBlank: ~
+

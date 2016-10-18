@@ -52,3 +52,4 @@ processes:
         issue_note_definition:
             -
                 event: create
+

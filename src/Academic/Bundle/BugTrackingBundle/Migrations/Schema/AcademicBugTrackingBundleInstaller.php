@@ -3,6 +3,7 @@
 namespace Academic\Bundle\BugTrackingBundle\Migrations\Schema;
 
 use Doctrine\DBAL\Schema\Schema;
+
 use Oro\Bundle\MigrationBundle\Migration\Installation;
 use Oro\Bundle\MigrationBundle\Migration\QueryBag;
 use Oro\Bundle\EntityExtendBundle\Migration\Extension\ExtendExtension;
@@ -11,6 +12,7 @@ use Oro\Bundle\NoteBundle\Migration\Extension\NoteExtension;
 use Oro\Bundle\NoteBundle\Migration\Extension\NoteExtensionAwareInterface;
 use Oro\Bundle\ActivityBundle\Migration\Extension\ActivityExtension;
 use Oro\Bundle\ActivityBundle\Migration\Extension\ActivityExtensionAwareInterface;
+
 use Academic\Bundle\BugTrackingBundle\Migrations\Schema\v1_0\AcademicBugTrackingBundle;
 use Academic\Bundle\BugTrackingBundle\Migrations\Schema\v1_1\AcademicBugTrackingBundle as AcademicBugTrackingBundle11;
 

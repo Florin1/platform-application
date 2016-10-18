@@ -3,10 +3,12 @@
 namespace Academic\Bundle\BugTrackingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\Config;
 use Oro\Bundle\EntityConfigBundle\Metadata\Annotation\ConfigField;
-use Academic\Bundle\BugTrackingBundle\Model\ExtendIssue;
 use Oro\Bundle\UserBundle\Entity\User;
+
+use Academic\Bundle\BugTrackingBundle\Model\ExtendIssue;
 
 /**
  * Issue

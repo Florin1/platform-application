@@ -3,11 +3,13 @@
 namespace Academic\Bundle\BugTrackingBundle\Form\Handler;
 
 use Symfony\Component\HttpFoundation\Request;
+
 use Oro\Bundle\EntityBundle\ORM\DoctrineHelper;
 use Oro\Bundle\UserBundle\Entity\User;
 use Oro\Bundle\EntityBundle\Tools\EntityRoutingHelper;
 use Oro\Bundle\EntityExtendBundle\Tools\ExtendHelper;
 use Oro\Bundle\EntityExtendBundle\Entity\Repository\EnumValueRepository;
+
 use Academic\Bundle\BugTrackingBundle\Entity\Issue;
 
 class IssueHandler

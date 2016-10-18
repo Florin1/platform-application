@@ -19,6 +19,7 @@ academic:
         issue:
             entity_plural_label: 'Issues'
             entity_label: 'Issue'
+            entity_subtask_label: 'Subtask'
             create_issue: 'Create Issue'
             saved_message: 'Successfully saved issue'
             type:

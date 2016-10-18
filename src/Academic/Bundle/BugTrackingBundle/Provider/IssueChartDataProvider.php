@@ -5,6 +5,7 @@ namespace Academic\Bundle\BugTrackingBundle\Provider;
 use Oro\Bundle\EntityBundle\ORM\DoctrineHelper;
 use Oro\Bundle\EntityExtendBundle\Tools\ExtendHelper;
 use Oro\Bundle\EntityExtendBundle\Entity\Repository\EnumValueRepository;
+
 use Academic\Bundle\BugTrackingBundle\Entity\Issue;
 use Academic\Bundle\BugTrackingBundle\Entity\Repository\IssueRepository;
 

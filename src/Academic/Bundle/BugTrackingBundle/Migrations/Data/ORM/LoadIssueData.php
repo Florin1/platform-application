@@ -4,9 +4,11 @@ namespace Academic\Bundle\BugTrackingBundle\Migrations\Data\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
+
 use Oro\Bundle\EntityExtendBundle\Entity\Repository\EnumValueRepository;
 use Oro\Bundle\EntityExtendBundle\Tools\ExtendHelper;
 use Oro\Bundle\EntityExtendBundle\Entity\AbstractEnumValue;
+
 use Academic\Bundle\BugTrackingBundle\Entity\Issue;
 
 class LoadIssueEnumsData extends AbstractFixture

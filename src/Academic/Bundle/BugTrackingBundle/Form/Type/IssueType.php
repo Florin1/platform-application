@@ -5,12 +5,14 @@ namespace Academic\Bundle\BugTrackingBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Oro\Bundle\EntityExtendBundle\Form\Type\EnumSelectType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
+use Oro\Bundle\EntityExtendBundle\Form\Type\EnumSelectType;
+
 use Academic\Bundle\BugTrackingBundle\Entity\Issue;
 use Academic\Bundle\BugTrackingBundle\Form\EventListener\IssueSubscriber;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class IssueType extends AbstractType
 {

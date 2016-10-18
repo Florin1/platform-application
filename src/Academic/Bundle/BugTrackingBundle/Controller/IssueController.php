@@ -2,11 +2,13 @@
 
 namespace Academic\Bundle\BugTrackingBundle\Controller;
 
-use Academic\Bundle\BugTrackingBundle\Form\Handler\IssueHandler;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+
+use Academic\Bundle\BugTrackingBundle\Form\Handler\IssueHandler;
 use Academic\Bundle\BugTrackingBundle\Entity\Issue;
 use Academic\Bundle\BugTrackingBundle\Form\Type\IssueType;
 
@@ -20,6 +22,7 @@ class IssueController extends Controller
      *      name="academic_bug_tracking_index",
      * )
      * @Template
+     * @return array
      */
     public function indexAction()
     {
@@ -31,6 +34,7 @@ class IssueController extends Controller
     /**
      * @Route("/create", name="academic_bug_tracking_create")
      * @Template("AcademicBugTrackingBundle:Issue:update.html.twig")
+     * @return array|RedirectResponse
      */
     public function createAction()
     {
@@ -56,9 +60,7 @@ class IssueController extends Controller
      */
     public function viewAction(Issue $issue)
     {
-        return [
-            'entity' => $issue
-        ];
+        return ['entity' => $issue];
     }
 
     /**
@@ -85,6 +87,8 @@ class IssueController extends Controller
      *      requirements={"widget"="[\w-]+"}
      * )
      * @Template("AcademicBugTrackingBundle:Dashboard:issues_chart_widget.html.twig")
+     * @param $widget
+     * @return array
      */
     public function chartAction($widget)
     {

@@ -2,11 +2,12 @@
 
 namespace Academic\Bundle\BugTrackingBundle\ImportExport\TemplateFixture;
 
-use Academic\Bundle\BugTrackingBundle\Entity\Issue;
 use Oro\Bundle\ImportExportBundle\TemplateFixture\AbstractTemplateRepository;
 use Oro\Bundle\ImportExportBundle\TemplateFixture\TemplateFixtureInterface;
 use Oro\Bundle\EntityExtendBundle\Tools\ExtendHelper;
 use Oro\Bundle\UserBundle\Entity\User;
+
+use Academic\Bundle\BugTrackingBundle\Entity\Issue;
 
 class IssueFixture extends AbstractTemplateRepository implements TemplateFixtureInterface
 {
