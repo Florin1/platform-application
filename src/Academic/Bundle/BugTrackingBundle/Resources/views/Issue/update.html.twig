@@ -2,7 +2,13 @@
 {% form_theme form with 'OroFormBundle:Form:fields.html.twig' %}
 {% import 'OroDataGridBundle::macros.html.twig' as dataGrid %}
 
-{% oro_title_set({params : {"%code%": entity.code|default('N/A'|trans) } }) %}
+{% oro_title_set({
+titleTemplate : "%entity% - %code%",
+params : {
+"%entity%": 'academic.bugtracking.issue.entity_label'|trans,
+"%code%": entity.code|default('N/A')|trans,
+}
+}) %}
 
 {% set formAction = entity.id ? path('academic_bug_tracking_update', { 'id': entity.id }) : path('academic_bug_tracking_create') %}
 
