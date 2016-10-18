@@ -11,6 +11,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Doctrine\ORM\EntityRepository;
 
 use Oro\Bundle\UserBundle\Entity\User;
+
 use Academic\Bundle\BugTrackingBundle\Entity\Issue;
 
 class IssueSubscriber implements EventSubscriberInterface

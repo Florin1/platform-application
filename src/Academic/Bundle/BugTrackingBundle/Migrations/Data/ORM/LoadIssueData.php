@@ -114,6 +114,10 @@ class LoadIssueEnumsData extends AbstractFixture
         ],
     ];
 
+    /**
+     * Loads enum fields fixtures
+     * @param ObjectManager $manager
+     */
     public function load(ObjectManager $manager)
     {
         $this->loadData($manager, Issue::PRIORITY_ENUM_CODE, $this->priorityEnumData);
