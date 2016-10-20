@@ -82,6 +82,7 @@ class IssueType extends AbstractType
                 'parent',
                 EntityType::class, array(
                 'class' => Issue::class,
+                'disabled' => true,
             ));
         };
         $builder->add(

@@ -19,6 +19,14 @@
     {{ parent() }}
 {% endblock pageHeader %}
 
+{% block breadcrumb %}
+    {% set breadcrumbs = [
+    {'label': 'academic.bugtracking.issue.entity_plural_label'|trans },
+    {'label': entity.code }
+    ] %}
+    {% include 'OroNavigationBundle:Menu:breadcrumbs.html.twig' %}
+{% endblock breadcrumb %}
+
 {% block navButtons %}
     {{ parent() }}
     {% if not entity.parent %}

@@ -40,6 +40,14 @@ params : {
     {% endif %}
 {% endblock pageHeader %}
 
+{% block breadcrumb %}
+    {% set breadcrumbs = [
+    {'label': 'academic.bugtracking.issue.entity_plural_label'|trans },
+    {'label': entity.code|default('N/A')|trans }
+    ] %}
+    {% include 'OroNavigationBundle:Menu:breadcrumbs.html.twig' %}
+{% endblock breadcrumb %}
+
 {% block content_data %}
     {% if isWidgetContext %}
         <script type="text/javascript">

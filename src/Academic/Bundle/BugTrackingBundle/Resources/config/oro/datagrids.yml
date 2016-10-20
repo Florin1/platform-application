@@ -46,6 +46,8 @@ datagrids:
             updatedAt:
                 label: academic.bugtracking.issue.updated_at.label
                 frontend_type: datetime
+            step:
+                renderable: false
         sorters:
             columns:
                 code:
