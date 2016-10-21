@@ -1,3 +1,5 @@
 api:
     entities:
-        Academic\Bundle\BugTrackingBundle\Entity\Issue: ~
+        Academic\Bundle\BugTrackingBundle\Entity\Issue:
+            actions:
+                delete: false
