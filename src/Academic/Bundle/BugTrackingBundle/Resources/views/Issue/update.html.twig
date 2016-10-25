@@ -2,6 +2,8 @@
 {% form_theme form with 'OroFormBundle:Form:fields.html.twig' %}
 {% import 'OroDataGridBundle::macros.html.twig' as dataGrid %}
 {% import 'OroUIBundle::macros.html.twig' as UI %}
+{% import 'OroEntityConfigBundle::macros.html.twig' as entityConfig %}
+
 
 {% oro_title_set({
 titleTemplate : "%entity% - %code%",
@@ -87,7 +89,8 @@ params : {
     form_row(form.priority),
     form_row(form.resolution),
     form_row(form.assignee),
-    form_row(form.reporter)
+    form_row(form.reporter),
+    form_rest(form)
     ]) %}
 
     {% set dataBlocks = [{

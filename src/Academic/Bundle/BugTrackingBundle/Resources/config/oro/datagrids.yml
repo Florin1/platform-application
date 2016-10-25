@@ -8,6 +8,7 @@ datagrids:
                     - issue.id
                     - issue.code
                     - issue.summary
+                    - issueStatus.name as issueStatusName
                     - issueType.name as issueTypeName
                     - issuePriority.name as issuePriorityName
                     - issuePriority.priority as issuePriorityValue
@@ -15,12 +16,13 @@ datagrids:
                     - issueReporter.username as issueReporterUsername
                     - issueAssignee.username as issueAssigneeUsername
                     - issue.createdAt
-                    - issue.updatedAt
+                    - issue.updatedAt as issueUpdatedAt
                 from:
                     - { table: '%academic.bug_tracking.issue.class%', alias: issue }
                 join:
                     left:
                         - { join: issue.type, alias: issueType}
+                        - { join: issue.status, alias: issueStatus}
                         - { join: issue.priority, alias: issuePriority}
                         - { join: issue.reporter, alias: issueReporter}
                         - { join: issue.assignee, alias: issueAssignee}
@@ -32,6 +34,8 @@ datagrids:
                 label: academic.bugtracking.issue.summary.label
             issueTypeName:
                 label: academic.bugtracking.issue.type.label
+            issueStatusName:
+                label: academic.bugtracking.issue.status.label
             issuePriorityName:
                 label: academic.bugtracking.issue.priority.label
             issueResolutionName:
@@ -56,6 +60,8 @@ datagrids:
                     data_name: issue.summary
                 issueTypeName:
                     data_name: issueTypeName
+                issueStatusName:
+                    data_name: issueStatusName
                 issuePriorityName:
                     data_name: issuePriorityValue
                 issueResolutionName:
@@ -78,6 +84,10 @@ datagrids:
                 summary:
                     type: string
                     data_name: issue.summary
+                issueTypeName:
+                    type:      enum
+                    data_name: issueTypeName
+                    enum_code: oac_issue_type
                 issueTypeName:
                     type:      enum
                     data_name: issueTypeName
@@ -141,6 +151,10 @@ datagrids:
         extends: bug-tracking-issues-user-grid
         filters: ~
         sorters: ~
+        source:
+            query:
+                orderBy:
+                    - { column: issueUpdatedAt , dir: DESC}
         options:
             toolbarOptions:
                 hide: true

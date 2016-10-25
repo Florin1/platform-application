@@ -16,16 +16,6 @@ use Academic\Bundle\BugTrackingBundle\Entity\Issue;
 class LoadIssueData extends AbstractFixture
 {
     /**
-     * {@inheritdoc}
-     */
-    public function getDependencies()
-    {
-        return [
-            LoadAdminUserData::class,
-        ];
-    }
-
-    /**
      * Loads issues fixtures
      * @param ObjectManager $manager
      */

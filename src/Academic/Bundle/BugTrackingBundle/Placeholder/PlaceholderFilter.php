@@ -22,6 +22,6 @@ class PlaceholderFilter
      */
     public function isUserViewRoute()
     {
-        return $this->request->get('_route') === 'oro_user_profile_view';
+        return $this->request->get('_route') === 'oro_user_view';
     }
 }

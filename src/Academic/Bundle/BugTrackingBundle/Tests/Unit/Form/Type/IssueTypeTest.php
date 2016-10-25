@@ -2,20 +2,21 @@
 
 namespace Academic\Bundle\BugTrackingBundle\Tests\Unit\Form\Type;
 
-use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\PreloadedExtension;
+use Symfony\Component\Form\Test\FormIntegrationTestCase;
 
+use Oro\Bundle\UserBundle\Entity\User;
+
+use Academic\Bundle\BugTrackingBundle\Tests\Unit\Form\EventListener\Stub\IssueSubscriberStub;
+use Academic\Bundle\BugTrackingBundle\Tests\Unit\Form\Type\Stub\IssueStub;
+use Academic\Bundle\BugTrackingBundle\Tests\Unit\Form\Type\Stub\EnumSelectTypeStub;
 use Academic\Bundle\BugTrackingBundle\Form\Type\IssueType;
 use Academic\Bundle\BugTrackingBundle\Form\EventListener\IssueSubscriber;
 use Academic\Bundle\BugTrackingBundle\Entity\Issue;
 
-class IssueTypeTest extends \PHPUnit_Framework_TestCase
+class IssueTypeTest extends FormIntegrationTestCase
 {
-    /**
-     * @var |\PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $dataClass;
-
     /**
      * @var IssueSubscriber|\PHPUnit_Framework_MockObject_MockObject
      */
@@ -32,64 +33,53 @@ class IssueTypeTest extends \PHPUnit_Framework_TestCase
     protected $issueSubscriber;
 
     /**
-     * @var FormBuilder|\PHPUnit_Framework_MockObject_MockObject $builder
-     */
-    protected $builder;
-
-    /**
      * @var OptionsResolverInterface|\PHPUnit_Framework_MockObject_MockObject $resolver
      */
     protected $resolver;
 
     /**
-     * @var Issue|\PHPUnit_Framework_MockObject_MockObject $issue
+     * @var Issue
      */
     protected $issue;
 
-    protected function setUp()
+    /**
+     * @return array
+     */
+    protected function getExtensions()
     {
-        $this->issue = $this->getMockBuilder(Issue::class)
-            ->disableOriginalConstructor()
-            ->setMethods(array('hasParent'))
-            ->getMock();
+        $stubEnumSelectType = new EnumSelectTypeStub([]);
 
-        $this->issue->expects($this->any())
-            ->method('hasParent')
-            ->willReturn(false);
+        return [
+            new PreloadedExtension(
+                [
+                    $stubEnumSelectType->getName() => $stubEnumSelectType,
+                ],
+                []
+            )
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setUp()
+    {
+        parent::setUp();
 
         $this->eventListener = $this->getMockBuilder(IssueSubscriber::class)
             ->disableOriginalConstructor()
+            ->setMethods(array('getSubscribedEvents'))
             ->getMock();
-
-        $this->builder = $this->getMockBuilder(FormBuilder::class)
-            ->disableOriginalConstructor()
-            ->setMethods(array('add', 'addEventSubscriber', 'getData'))
-            ->getMock();
-
-        $this->builder->expects($this->any())
-            ->method('add')
-            ->willReturn($this->builder);
-
-        $this->builder->expects($this->any())
-            ->method('getData')
-            ->willReturn($this->issue);
-
-        $this->builder->expects($this->any())
-            ->method('addEventSubscriber')
-            ->with($this->isInstanceOf(IssueSubscriber::class));
-
+        $this->eventListener->expects($this->any())
+            ->method('getSubscribedEvents')
+            ->willReturn(array());
         $this->resolver = $this->getMock(OptionsResolverInterface::class);
 
         $this->resolver->expects($this->any())
             ->method('setDefaults')
             ->with($this->isType('array'));
 
-        $this->issueType = new IssueType($this->dataClass, $this->eventListener);
-    }
-
-    public function testBuildForm()
-    {
-        $this->issueType->buildForm($this->builder, []);
+        $this->issueType = new IssueType(Issue::class, new IssueSubscriberStub());
     }
 
     public function testSetDefaultOptions()
@@ -100,5 +90,79 @@ class IssueTypeTest extends \PHPUnit_Framework_TestCase
     public function testGetName()
     {
         $this->assertEquals('academic_bug_tracking_issue', $this->issueType->getName());
+    }
+
+    /**
+     * @dataProvider submitDataProvider
+     * @param Issue $defaultData
+     * @param array $submittedData
+     * @param Issue $expectedData
+     */
+    public function testSubmit(Issue $defaultData, array $submittedData, Issue $expectedData)
+    {
+        $form = $this->factory->create($this->issueType, $defaultData, []);
+        $this->assertEquals($defaultData, $form->getData());
+        $form->submit($submittedData);
+        $this->assertTrue($form->isValid());
+
+        $data = $form->getData();
+
+        $this->assertEquals($expectedData, $data);
+    }
+
+    /**
+     * @return array
+     */
+    public function submitDataProvider()
+    {
+        $expectedIssue = $this->getExpectedIssue();
+        $defaultIssue = $this->getDefaultIssue();
+
+        return [
+            'issue test' => [
+                'defaultData' => $defaultIssue,
+                'submittedData' => [
+                    'code' => 'code',
+                    'description' => 'description',
+                    'summary' => 'summary',
+                    'type' => Issue::TYPE_STORY,
+                    'priority' => Issue::PRIORITY_BLOCKER,
+                    'resolution' => Issue::RESOLUTION_DONE,
+                    'assignee' => 1,
+                    'reporter' => 1,
+                ],
+                'expectedData' => $expectedIssue
+            ]
+        ];
+    }
+
+    public function getDefaultIssue()
+    {
+        $issue = new IssueStub();
+        $issue->setAssignee($this->getUser());
+        $issue->setReporter($this->getUser());
+
+        return $issue;
+    }
+
+    public function getExpectedIssue()
+    {
+        $issue = new IssueStub;
+        $issue->setCode('code');
+        $issue->setDescription('description');
+        $issue->setSummary('summary');
+        $issue->setAssignee($this->getUser());
+        $issue->setReporter($this->getUser());
+
+        return $issue;
+    }
+
+    public function getUser()
+    {
+        $user = new User();
+        $user->setSalt('salt');
+        $user->setId(1);
+
+        return $user;
     }
 }

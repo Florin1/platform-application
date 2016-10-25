@@ -104,16 +104,19 @@ class IssueController extends Controller
                     'label' => [
                         'field_name' => 'status',
                         'label' => 'oro.dashboard.issues_chart.chart.label',
-                        'type' => 'string'
+                        'type' => 'string',
+                        'required' => true,
                     ],
                     'value' => [
                         'field_name' => 'count',
                         'label' => 'oro.dashboard.issues_chart.chart.value',
-                        'type' => 'number'
-                    ]
+                        'type' => 'number',
+                        'required' => true,
+                    ],
                 ],
+                'settings' => ['xNoTicks' => 4],
             ])
-            ->setDataMapping(array('label' => 'status', 'value' => 'count'))
+            ->setDataMapping(['label' => 'status', 'value' => 'count'])
             ->getView();
 
         $widgetAttr = $this->get('oro_dashboard.widget_configs')->getWidgetAttributesForTwig($widget);

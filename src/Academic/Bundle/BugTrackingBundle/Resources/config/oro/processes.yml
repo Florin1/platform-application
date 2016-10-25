@@ -48,8 +48,27 @@ processes:
                                 - '@call_method':
                                         object: $.issue
                                         method: setPreUpdateValues
+        issue_status_definition:
+            label: 'Issue status definition'
+            enabled: true
+            entity: Academic\Bundle\BugTrackingBundle\Entity\Issue
+            exclude_definitions: [issue_status_definition]
+            actions_configuration:
+                - '@call_service_method':
+                    service: oro_entity_extend.enum_value_provider
+                    method: getEnumValueByCode
+                    method_parameters: ['oac_issue_status', 'open']
+                    attribute: $.resultStatus
+                - @assign_value:
+                    conditions:
+                        '@not_empty': [$.resultStatus]
+                    parameters: [$.data.status, $.resultStatus]
+
+
     triggers:
         issue_note_definition:
             -
                 event: create
-
+        issue_status_definition:
+            -
+                event: create

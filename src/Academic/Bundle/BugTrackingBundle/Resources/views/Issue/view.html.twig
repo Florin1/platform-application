@@ -1,5 +1,6 @@
 {% extends 'OroUIBundle:actions:view.html.twig' %}
 {% import 'OroDataGridBundle::macros.html.twig' as dataGrid %}
+{% import 'OroEntityConfigBundle::macros.html.twig' as entityConfig %}
 
     {% oro_title_set({
     titleTemplate : "%entity% - %code%",
@@ -29,7 +30,7 @@
 
 {% block navButtons %}
     {{ parent() }}
-    {% if not entity.parent %}
+    {% if not entity.parent and entity.type == 'Story' %}
         <div class="btn-group pull-right">
             {{ UI.addButton({
                 'path': path('academic_bug_tracking_create', oro_action_params(entity)),
@@ -37,6 +38,13 @@
             }) }}
         </div>
     {% endif %}
+
+    <div class="btn-group pull-right">
+        {{ UI.editButton({
+            'path': path('academic_bug_tracking_update', {'id' : entity.id}),
+            'entity_label': 'academic.bugtracking.issue.entity_label'|trans
+        }) }}
+    </div>
 {% endblock %}
 
 {% block content_data %}
@@ -54,7 +62,7 @@
                         </div>
                     </div>
                 {% endif %}
-                {% if entity.type == 'Task' %}
+                {% if entity.type == 'Story' %}
                     <div class="control-group">
                         <label class="control-label">{{ 'academic.bugtracking.issue.children.label'|trans }}</label>
                         <div class="controls">
@@ -67,8 +75,10 @@
 
                 {{ UI.renderProperty('academic.bugtracking.issue.resolution.label'|trans, entity.resolution) }}
                 {{ UI.renderProperty('academic.bugtracking.issue.priority.label'|trans, entity.priority) }}
+                {{ UI.renderProperty('academic.bugtracking.issue.status.label'|trans, entity.status) }}
                 {{ UI.renderProperty('academic.bugtracking.issue.summary.label'|trans, entity.summary) }}
                 {{ UI.renderProperty('academic.bugtracking.issue.description.label'|trans, entity.description) }}
+                {{ entityConfig.renderDynamicFields(entity) }}
             </div>
             <div class="responsive-cell">
                 {{ UI.renderProperty('academic.bugtracking.issue.reporter.label'|trans, entity.reporter.username) }}

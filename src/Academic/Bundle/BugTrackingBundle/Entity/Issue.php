@@ -34,6 +34,7 @@ class Issue extends ExtendIssue
     const TYPE_TASK = 'task';
     const TYPE_SUBTASK = 'subtask';
     const TYPE_BUG = 'bug';
+    const TYPE_STORY = 'story';
 
     const PRIORITY_BLOCKER = 'blocker';
     const PRIORITY_CRITICAL = 'critical';

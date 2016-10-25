@@ -9,8 +9,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-use Oro\Bundle\EntityExtendBundle\Form\Type\EnumSelectType;
-
 use Academic\Bundle\BugTrackingBundle\Entity\Issue;
 use Academic\Bundle\BugTrackingBundle\Form\EventListener\IssueSubscriber;
 
@@ -67,14 +65,17 @@ class IssueType extends AbstractType
                 ]
             );
         if (!$builder->getData()->hasParent()) {
+            $disabled = boolval($builder->getData()->getId()) && $builder->getData()->getChildren()->count() > 0;
+
             $builder->add(
                 'type',
-                EnumSelectType::class,
+                'oro_enum_select',
                 [
                     'label' => 'academic.bugtracking.issue.type.label',
                     'enum_code' => Issue::TYPE_ENUM_CODE,
                     'configs' => ['allowClear' => false],
-                    'excluded_values' => [Issue::TYPE_SUBTASK]
+                    'excluded_values' => [Issue::TYPE_SUBTASK],
+                    'disabled' => $disabled
                 ]
             );
         } else {
@@ -87,7 +88,7 @@ class IssueType extends AbstractType
         };
         $builder->add(
             'priority',
-            EnumSelectType::class,
+            'oro_enum_select',
             [
                 'label' => 'academic.bugtracking.issue.priority.label',
                 'enum_code' => Issue::PRIORITY_ENUM_CODE,
@@ -96,7 +97,7 @@ class IssueType extends AbstractType
         )
             ->add(
                 'resolution',
-                EnumSelectType::class,
+                'oro_enum_select',
                 [
                     'label' => 'academic.bugtracking.issue.resolution.label',
                     'enum_code' => Issue::RESOLUTION_ENUM_CODE,

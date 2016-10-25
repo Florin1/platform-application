@@ -10,23 +10,23 @@ workflows:
         steps:
             open:
                 label: 'Open'
-                order: 10
+                order: 1
                 allowed_transitions: ['start_progress', 'resolve', 'close']
             in_progress:
                 label: 'In Progress'
-                order: 10
+                order: 2
                 allowed_transitions: ['stop_progress', 'resolve', 'close']
             closed:
                 label: 'Closed'
-                order: 10
+                order: 4
                 allowed_transitions: ['reopen']
             resolved:
                 label: 'Resolved'
-                order: 10
+                order: 3
                 allowed_transitions: ['close', 'reopen']
             reopened:
                 label: 'Reopened'
-                order: 10
+                order: 1
                 allowed_transitions: ['start_progress']
         attributes:
             status:

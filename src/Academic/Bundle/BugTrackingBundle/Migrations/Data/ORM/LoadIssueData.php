@@ -39,19 +39,24 @@ class LoadIssueEnumsData extends AbstractFixture
 
     /** @var array */
     protected $typeEnumData = [
+        Issue::TYPE_STORY => [
+            'label' => 'Story',
+            'priority' => 1,
+            'default' => false
+        ],
         Issue::TYPE_TASK => [
             'label' => 'Task',
-            'priority' => 1,
+            'priority' => 2,
             'default' => true
         ],
         Issue::TYPE_SUBTASK => [
             'label' => 'Subtask',
-            'priority' => 2,
+            'priority' => 3,
             'default' => false
         ],
         Issue::TYPE_BUG => [
             'label' => 'Bug',
-            'priority' => 3,
+            'priority' => 4,
             'default' => false
         ],
     ];

@@ -44,17 +44,9 @@ class IssueControllerTest extends WebTestCase
 
     public function testUpdateAction()
     {
-        $response = $this->client->requestGrid(
-            'bug-tracking-issues-grid',
-            array('tasks-grid[_filter][issueReporterUsername][value]' => 'admin')
-        );
-
-        $result = $this->getJsonResponseContent($response, 200);
-        $result = reset($result['data']);
-
         $crawler = $this->client->request(
             'GET',
-            $this->getUrl('academic_bug_tracking_update', array('id' => $result['id']))
+            $this->getUrl('academic_bug_tracking_update', array('id' => $this->issue->getId()))
         );
 
         $form = $crawler->selectButton('Save and Close')->form();
@@ -70,22 +62,14 @@ class IssueControllerTest extends WebTestCase
 
     public function testViewAction()
     {
-        $response = $this->client->requestGrid(
-            'bug-tracking-issues-grid',
-            array('tasks-grid[_filter][issueReporterUsername][value]' => 'admin')
-        );
-
-        $result = $this->getJsonResponseContent($response, 200);
-        $result = reset($result['data']);
-
         $this->client->request(
             'GET',
-            $this->getUrl('academic_bug_tracking_view', array('id' => $result['id']))
+            $this->getUrl('academic_bug_tracking_view', array('id' => $this->issue->getId()))
         );
         $result = $this->client->getResponse();
 
         $this->assertHtmlResponseStatusCodeEquals($result, 200);
-        $this->assertContains('General Information', $result->getContent());
+        $this->assertContains('Issue description updated', $result->getContent());
     }
 
     public function testChartAction()
