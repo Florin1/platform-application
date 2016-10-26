@@ -142,19 +142,25 @@ datagrids:
         source:
             query:
                 where:
-                    and:
-                        - :user_id MEMBER OF issue.collaborators
+                    or:
+                        - :user_id = issue.assignee
+                        - :user_id = issue.reporter
             bind_parameters:
                 - user_id
 
     bug-tracking-issues-recent-grid:
-        extends: bug-tracking-issues-user-grid
+        extends: bug-tracking-issues-grid
         filters: ~
         sorters: ~
         source:
             query:
+                where:
+                    and:
+                        - :user_id MEMBER OF issue.collaborators
                 orderBy:
                     - { column: issueUpdatedAt , dir: DESC}
+            bind_parameters:
+                - user_id
         options:
             toolbarOptions:
                 hide: true
