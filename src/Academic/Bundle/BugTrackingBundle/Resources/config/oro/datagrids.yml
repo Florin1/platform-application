@@ -88,10 +88,10 @@ datagrids:
                     type:      enum
                     data_name: issueTypeName
                     enum_code: oac_issue_type
-                issueTypeName:
+                issueStatusName:
                     type:      enum
-                    data_name: issueTypeName
-                    enum_code: oac_issue_type
+                    data_name: issueStatusName
+                    enum_code: oac_issue_status
                 issuePriorityName:
                     type:      enum
                     data_name: issuePriorityName

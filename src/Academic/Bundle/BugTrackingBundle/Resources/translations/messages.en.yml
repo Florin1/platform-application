@@ -63,3 +63,7 @@ academic:
                     label: 'View'
                 edit:
                     label: 'Edit'
+        import:
+            title: 'Import'
+        export:
+            title: 'Export'

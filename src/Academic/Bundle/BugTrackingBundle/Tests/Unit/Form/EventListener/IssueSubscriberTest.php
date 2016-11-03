@@ -7,6 +7,9 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\Test\FormIntegrationTestCase;
 use Symfony\Component\Form\Form;
 
+use Oro\Bundle\EntityBundle\ORM\DoctrineHelper;
+use Oro\Bundle\UserBundle\Entity\Repository\UserRepository;
+
 use Academic\Bundle\BugTrackingBundle\Form\EventListener\IssueSubscriber;
 use Academic\Bundle\BugTrackingBundle\Entity\Issue;
 
@@ -32,15 +35,43 @@ class IssueSubscriberTest extends FormIntegrationTestCase
      */
     protected $issue;
 
+    /**
+     * @var DoctrineHelper|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $doctrineHelper;
+
+    /**
+     * @var UserRepository|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $userRepo;
+
     protected function setUp()
     {
         parent::setUp();
-        $this->issueSubscriber = new IssueSubscriber($this->factory);
+
+        $this->userRepo = $this->getMockBuilder(UserRepository::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['findBy'])
+            ->getMock();
+
+        $this->userRepo->expects($this->any())
+            ->method('findBy')
+            ->willReturn([]);
+
+        $this->doctrineHelper = $this->getMockBuilder(DoctrineHelper::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['getEntityRepositoryForClass'])
+            ->getMock();
+
+        $this->doctrineHelper->expects($this->any())
+            ->method('getEntityRepositoryForClass')
+            ->willReturn($this->userRepo);
+
         $this->issue = $this->getMock(Issue::class);
 
         $this->form = $this->getMockBuilder(Form::class)
             ->disableOriginalConstructor()
-            ->setMethods(array('add'))
+            ->setMethods(['add'])
             ->getMock();
 
         $this->form->expects($this->any())
@@ -49,7 +80,7 @@ class IssueSubscriberTest extends FormIntegrationTestCase
 
         $this->event = $this->getMockBuilder(FormEvent::class)
             ->disableOriginalConstructor()
-            ->setMethods(array('getData', 'getForm'))
+            ->setMethods(['getData', 'getForm'])
             ->getMock();
 
         $this->event->expects($this->any())
@@ -59,6 +90,8 @@ class IssueSubscriberTest extends FormIntegrationTestCase
         $this->event->expects($this->any())
             ->method('getForm')
             ->willReturn($this->form);
+
+        $this->issueSubscriber = new IssueSubscriber($this->factory, $this->doctrineHelper);
     }
 
     public function testGetSubscribedEvents()

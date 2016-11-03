@@ -11,6 +11,7 @@ services:
         class: '%academic.bug_tracking.form.listener.issue.class%'
         arguments:
             - '@form.factory'
+            - '@oro_entity.doctrine_helper'
 
     academic.bug_tracking.form.type.issue:
         class: '%academic.bug_tracking.form.type.issue.class%'

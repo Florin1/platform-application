@@ -11,6 +11,10 @@ class PlaceholderFilter
      */
     protected $request;
 
+    /**
+     * PlaceholderFilter constructor.
+     * @param Request $request
+     */
     public function __construct(Request $request)
     {
         $this->request = $request;

@@ -37,7 +37,7 @@ class IssueChartDataProviderTest extends \PHPUnit_Framework_TestCase
     {
         $this->enumEntity = $this->getMockBuilder(AbstractEnumValue::class)
             ->disableOriginalConstructor()
-            ->setMethods(array('getId', 'getName'))
+            ->setMethods(['getId', 'getName'])
             ->getMock();
 
         $this->enumEntity->expects($this->any())
@@ -50,7 +50,7 @@ class IssueChartDataProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->issueRepo = $this->getMockBuilder(IssueRepository::class)
             ->disableOriginalConstructor()
-            ->setMethods(array('getIssuesGroupedByStatus'))
+            ->setMethods(['getIssuesGroupedByStatus'])
             ->getMock();
 
         $this->issueRepo->expects($this->any())
@@ -59,16 +59,16 @@ class IssueChartDataProviderTest extends \PHPUnit_Framework_TestCase
 
         $this->enumRepo = $this->getMockBuilder(EnumValueRepository::class)
             ->disableOriginalConstructor()
-            ->setMethods(array('findAll'))
+            ->setMethods(['findAll'])
             ->getMock();
 
         $this->enumRepo->expects($this->any())
             ->method('findAll')
-            ->willReturn(array($this->enumEntity));
+            ->willReturn([$this->enumEntity]);
 
         $this->doctrineHelper = $this->getMockBuilder(DoctrineHelper::class)
             ->disableOriginalConstructor()
-            ->setMethods(array('getEntityRepositoryForClass'))
+            ->setMethods(['getEntityRepositoryForClass'])
             ->getMock();
 
         $this->doctrineHelper->expects($this->any())

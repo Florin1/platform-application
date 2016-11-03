@@ -58,7 +58,7 @@ class IssueHandlerTest extends \PHPUnit_Framework_TestCase
     {
         $this->request = $this->getMockBuilder(Request::class)
             ->disableOriginalConstructor()
-            ->setMethods(array('get'))
+            ->setMethods(['get'])
             ->getMock();
 
         $this->request->expects($this->any())
@@ -67,7 +67,7 @@ class IssueHandlerTest extends \PHPUnit_Framework_TestCase
 
         $this->issue = $this->getMockBuilder(Issue::class)
             ->disableOriginalConstructor()
-            ->setMethods(array('setType', 'setParent'))
+            ->setMethods(['setType', 'setParent'])
             ->getMock();
 
         $this->request->expects($this->any())
@@ -78,7 +78,7 @@ class IssueHandlerTest extends \PHPUnit_Framework_TestCase
 
         $this->enumEntity = $this->getMockBuilder(AbstractEnumValue::class)
             ->disableOriginalConstructor()
-            ->setMethods(array('getId', 'getName'))
+            ->setMethods(['getId', 'getName'])
             ->getMock();
 
         $this->enumEntity->expects($this->any())
@@ -91,7 +91,7 @@ class IssueHandlerTest extends \PHPUnit_Framework_TestCase
 
         $this->issueRepo = $this->getMockBuilder(IssueRepository::class)
             ->disableOriginalConstructor()
-            ->setMethods(array('findOneBy'))
+            ->setMethods(['findOneBy'])
             ->getMock();
 
         $this->issueRepo->expects($this->any())
@@ -100,7 +100,7 @@ class IssueHandlerTest extends \PHPUnit_Framework_TestCase
 
         $this->enumRepo = $this->getMockBuilder(EnumValueRepository::class)
             ->disableOriginalConstructor()
-            ->setMethods(array('findOneBy'))
+            ->setMethods(['findOneBy'])
             ->getMock();
 
         $this->enumRepo->expects($this->any())
@@ -109,7 +109,7 @@ class IssueHandlerTest extends \PHPUnit_Framework_TestCase
 
         $this->doctrineHelper = $this->getMockBuilder(DoctrineHelper::class)
             ->disableOriginalConstructor()
-            ->setMethods(array('getEntityRepositoryForClass'))
+            ->setMethods(['getEntityRepositoryForClass'])
             ->getMock();
 
         $this->doctrineHelper->expects($this->any())
@@ -118,7 +118,7 @@ class IssueHandlerTest extends \PHPUnit_Framework_TestCase
 
         $this->entityRoutingHelper = $this->getMockBuilder(EntityRoutingHelper::class)
             ->disableOriginalConstructor()
-            ->setMethods(array('decodeClassName'))
+            ->setMethods(['decodeClassName'])
             ->getMock();
 
         $this->entityRoutingHelper->expects($this->any())
@@ -137,7 +137,7 @@ class IssueHandlerTest extends \PHPUnit_Framework_TestCase
     {
         $this->doctrineHelper = $this->getMockBuilder(DoctrineHelper::class)
             ->disableOriginalConstructor()
-            ->setMethods(array('getEntityRepositoryForClass'))
+            ->setMethods(['getEntityRepositoryForClass'])
             ->getMock();
 
         $this->doctrineHelper->expects($this->any())

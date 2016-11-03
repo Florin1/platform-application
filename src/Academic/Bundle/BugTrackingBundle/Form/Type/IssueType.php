@@ -81,10 +81,12 @@ class IssueType extends AbstractType
         } else {
             $builder->add(
                 'parent',
-                EntityType::class, array(
-                'class' => Issue::class,
-                'disabled' => true,
-            ));
+                EntityType::class,
+                [
+                    'class' => Issue::class,
+                    'disabled' => true,
+                ]
+            );
         };
         $builder->add(
             'priority',

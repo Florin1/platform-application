@@ -8,9 +8,8 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-use Doctrine\ORM\EntityRepository;
-
 use Oro\Bundle\UserBundle\Entity\User;
+use Oro\Bundle\EntityBundle\ORM\DoctrineHelper;
 
 use Academic\Bundle\BugTrackingBundle\Entity\Issue;
 
@@ -24,12 +23,19 @@ class IssueSubscriber implements EventSubscriberInterface
     protected $factory;
 
     /**
+     * @var DoctrineHelper
+     */
+    protected $doctrineHelper;
+
+    /**
      * IssueSubscriber constructor.
      * @param FormFactoryInterface $factory
+     * @param DoctrineHelper $doctrineHelper
      */
-    public function __construct(FormFactoryInterface $factory)
+    public function __construct(FormFactoryInterface $factory, DoctrineHelper $doctrineHelper)
     {
         $this->factory = $factory;
+        $this->doctrineHelper = $doctrineHelper;
     }
 
     /**
@@ -37,9 +43,9 @@ class IssueSubscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents()
     {
-        return array(
+        return [
             FormEvents::PRE_SET_DATA => 'preSetData',
-        );
+        ];
     }
 
     /**
@@ -57,29 +63,33 @@ class IssueSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $form->add('assignee', EntityType::class, array(
+        $form->add(
+            'assignee',
+            EntityType::class,
+            [
                 'class' => User::class,
-                'query_builder' => $this->getUsersClosure(),
+                'choices' => $this->getUsers(),
                 'choice_label' => 'username',
-            )
+            ]
         )
-            ->add('reporter', EntityType::class, array(
+            ->add(
+                'reporter',
+                EntityType::class,
+                [
                     'class' => User::class,
-                    'query_builder' => $this->getUsersClosure(),
+                    'choices' => $this->getUsers(),
                     'choice_label' => 'username',
-                )
+                ]
             );
     }
 
     /**
-     * @return callable
+     * @return array
      */
-    protected function getUsersClosure()
+    protected function getUsers()
     {
-        return function (EntityRepository $entityRepository) {
-            return $entityRepository->createQueryBuilder('user')
-                ->where('user.enabled = :enabled')
-                ->setParameter('enabled', true);
-        };
+        $userRepo = $this->doctrineHelper->getEntityRepositoryForClass(User::class);
+
+        return $userRepo->findBy(['enabled' => true]);
     }
 }

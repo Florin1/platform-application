@@ -68,11 +68,11 @@ class IssueTypeTest extends FormIntegrationTestCase
 
         $this->eventListener = $this->getMockBuilder(IssueSubscriber::class)
             ->disableOriginalConstructor()
-            ->setMethods(array('getSubscribedEvents'))
+            ->setMethods(['getSubscribedEvents'])
             ->getMock();
         $this->eventListener->expects($this->any())
             ->method('getSubscribedEvents')
-            ->willReturn(array());
+            ->willReturn([]);
         $this->resolver = $this->getMock(OptionsResolverInterface::class);
 
         $this->resolver->expects($this->any())

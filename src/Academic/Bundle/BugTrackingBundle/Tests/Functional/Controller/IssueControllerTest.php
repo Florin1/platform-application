@@ -46,7 +46,7 @@ class IssueControllerTest extends WebTestCase
     {
         $crawler = $this->client->request(
             'GET',
-            $this->getUrl('academic_bug_tracking_update', array('id' => $this->issue->getId()))
+            $this->getUrl('academic_bug_tracking_update', ['id' => $this->issue->getId()])
         );
 
         $form = $crawler->selectButton('Save and Close')->form();
@@ -64,7 +64,7 @@ class IssueControllerTest extends WebTestCase
     {
         $this->client->request(
             'GET',
-            $this->getUrl('academic_bug_tracking_view', array('id' => $this->issue->getId()))
+            $this->getUrl('academic_bug_tracking_view', ['id' => $this->issue->getId()])
         );
         $result = $this->client->getResponse();
 
@@ -75,7 +75,9 @@ class IssueControllerTest extends WebTestCase
     public function testChartAction()
     {
         $crawler = $this->client->request(
-            'GET', $this->getUrl('academic_bug_tracking_dashboard_chart', array('widget' => 'issues_chart')));
+            'GET',
+            $this->getUrl('academic_bug_tracking_dashboard_chart', ['widget' => 'issues_chart'])
+        );
         $result = $this->client->getResponse();
         $this->assertHtmlResponseStatusCodeEquals($result, 200);
         $this->assertContains('Issue status chart', $crawler->html());

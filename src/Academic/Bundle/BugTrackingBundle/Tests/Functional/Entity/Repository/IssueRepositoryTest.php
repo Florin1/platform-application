@@ -30,5 +30,7 @@ class IssueRepositoryTest extends WebTestCase
         $result = reset($this->repository->getIssuesGroupedByStatus());
 
         $this->assertArrayHasKey('status', $result);
+        $this->assertEquals($result['status'], 'open');
+        $this->assertEquals(reset($result), 1);
     }
 }
